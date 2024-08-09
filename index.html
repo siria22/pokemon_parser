@@ -4,19 +4,37 @@
 <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
 
 
-<div class="condition" style="padding-bottom:10px;">
+<!-- Condition -->
+<div id="condition" style="padding-bottom:10px;">
 
-    <form id="setCondition">
-        <input type="text" id="searchX" name="searchX" placeholder="검색어" style="width:100%;"/>
-        <br>
+    <style>
+        .spacer{
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+
+    <form id="setCondition" style="margin: 15px;">
+
+        <input type="text" id="searchX" name="searchX" placeholder="검색어" style="width:50%;"/><br>
+        <div class="spacer"></div>
+
+        <input type="text" id="tableLength" name="tableLength" placeholder="행 개수" style="width:10%;"/>
+        <div class="spacer"></div>
+
         <label>
             <input type="checkbox" id= "allowDup" name="cb_allowDup" value="AllowDup">
             중복 허용
         </label>
-        
-        <button id="btn_submitCondition" type="button" >Submit Condition</button>
+        <div class="spacer"></div>
 
-        <button id="btn_extractAsCsv" type="button" onclick="extractAsCsv()">Extract as .csv</button>
+        <button id="btn_query" type="button">
+            :: Button ::
+        </button>
+        <div class="spacer"></div>
+
+        <button id="btn_extractAsCsv" type="button">Extract as .csv</button>
+        <p>테스트 중!</p>
 
     </form>
 </div>
@@ -30,7 +48,7 @@
 </div>
 
 
-<!-- 22 Actual Datas -->
+<!-- Actual Datas -->
 <script>
 
     // Pokemon to be extracted
@@ -646,7 +664,6 @@
         Users: []
     };
 
-    
     function fetchPokemon() {
         var data = [{
             "base_attack": 118,
@@ -22019,7 +22036,6 @@
         return Math.max(10, Math.floor(atk * Math.sqrt(def * stm) / 10));
     }
     
-    // 22 Condition
     function filterRow(str, filterString) {
         const conditions = filterString.split(/([&,])/).map(cond=>cond.trim()).filter(Boolean);
         var result = null;
@@ -22144,20 +22160,21 @@
         }
     }
 
-
-    // 22 로딩 이후, 테이블 로드
+    // Load Table
     $(function() {
         fetchPokemon();
         fetchMegaPokemon();
         fetchFastMove();
         fetchChargedMove();
+
+        //Table Definition
         var table = $("#ranking_table").DataTable({
             lengthChange: false,
             autoWidth: false,
             deferRender: true,
             responsive: true,
             sDom: 'lrtip',
-            pageLength: 50,
+            pageLength: 20,
             columns: [{
                 title: "CP",
                 data: "cp",
@@ -22275,6 +22292,7 @@
             pkm.atk = (pkm.baseAtk + DEFAULT_ATTACKER_IVs[0]) * pkm.cpm * (pkm.isShadow ? Data.BattleSettings.shadowPokemonAttackBonusMultiplier : 1);
             pkm.def = (pkm.baseDef + DEFAULT_ATTACKER_IVs[1]) * pkm.cpm * (pkm.isShadow ? Data.BattleSettings.shadowPokemonDefenseBonusMultiplier : 1);
             pkm.stm = (pkm.baseStm + DEFAULT_ATTACKER_IVs[2]) * pkm.cpm;
+
             var TypeTranslation = Data.BattleSettings.TypeTranslation;
             pkm.pokeType1_kor = TypeTranslation[pkm.pokeType[0]];
             pkm.pokeType2_kor = TypeTranslation[pkm.pokeType[1]] == undefined ? "단일" : TypeTranslation[pkm.pokeType[1]];
@@ -22303,13 +22321,24 @@
         table.draw();
 
         // submit condition 버튼을 클릭할 경우
-        $('#btn_submitCondition').click(function() {
-            //console.clear();
+        $('#btn_query').click(function() {
+            console.clear();
+
             var filterString = $('#searchX').val();
             var allowDup = document.getElementById('allowDup');
-
             console.log("search : "+filterString);
             console.log("allowDup : "+allowDup.checked);
+            
+            var newPageLength = parseInt($('#tableLength').val());
+
+            if (isNaN(newPageLength) || newPageLength <= 0) {
+                alert('행 개수는 0 이상이어야 함!\n(기본값 : 20으로 설정)');
+                newPageLength = 20;
+            }
+
+            // DataTable의 pageLength 설정 업데이트
+            table.page.len(newPageLength).draw();
+
             EXTRACTED_POKEMON = [];
             table.draw();
         });
@@ -22344,4 +22373,30 @@
         });
         return result;
     }
+</script>
+
+<script>
+
+    function arrayToCSV(data) {
+            return data.map(row => row.join(",")).join("\n");
+        }
+
+    function downloadCSV(csvData, filename = 'data.csv') {
+        const blob = new Blob([csvData], { type: 'text/csv' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
+    document.getElementById('btn_extractAsCsv')
+            .addEventListener('click', function() {
+        const csvData = arrayToCSV(EXTRACTED_POKEMON);
+        downloadCSV(csvData);
+    });
+
 </script>
