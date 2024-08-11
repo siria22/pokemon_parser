@@ -15,11 +15,13 @@
     <div id="condition" style="padding-bottom:10px;">
 
         <form id="setCondition" style="margin: 15px;">
+            
+            <div>version 0.0.2</div>
 
             <input type="text" id="searchX" name="searchX" placeholder="검색어" style="width:50%;"/><br>
             <div class="spacer"></div>
 
-            <input type="text" id="tableLength" name="tableLength" placeholder="행 개수" value=20 style="width:10%;"/>
+            <input type="text" id="tableLength" name="tableLength" placeholder="행 개수" value=20 style="width:10%;"/> 개
             <div class="spacer"></div>
 
             <label>
@@ -56,7 +58,6 @@
 <script src="tableGenerator.js"></script>
 
 <script>
-
     // Load Table
     $(function() {
         fetchPokemon();
@@ -64,6 +65,7 @@
         fetchFastMove();
         fetchChargedMove();
         var tableColumns = fetchTableColumns();
+        EXTRACTED_POKEMON.push(`,이름,타입1,타입2,일반 공격,차징 공격,DPS,TDO,ER,CP,\n`);
 
         //Table Definition
         var table = $("#ranking_table").DataTable({
@@ -157,12 +159,14 @@
                         continue;
                     }
                     calculateDPS(pkmInstance, Context);
-                    pkmInstance.dps = round(pkmInstance.dps, 3);
-                    pkmInstance.tdo = round(pkmInstance.tdo, 1);
-                    pkmInstance.overall = round((pkmInstance.dps ** 3 * pkmInstance.tdo) ** 0.25, 2);
+                    pkmInstance.dps = round(pkmInstance.dps, 3).toString();
+                    pkmInstance.tdo = round(pkmInstance.tdo, 1).toString();
+                    pkmInstance.overall = round((pkmInstance.dps ** 3 * pkmInstance.tdo) ** 0.25, 2).toString();
                     pkmInstance.fmove.type_kor = TypeTranslation[pkmInstance.fmove.type];
                     pkmInstance.cmove.type_kor = TypeTranslation[pkmInstance.cmove.type];
                     table.row.add(pkmInstance);
+                    
+                    EXTRACTED_POKEMON.push(pkmDTO(pkmInstance));
                 }
             }
         }
@@ -185,11 +189,10 @@
                 newPageLength = 20;
             }
 
-            // DataTable의 pageLength 설정 업데이트
+            // Update DataTable 
             table.page.len(newPageLength).draw();
-
-            EXTRACTED_POKEMON = [];
             table.draw();
+
         });
 
         $.fn.dataTable.ext.search.push(
@@ -197,16 +200,13 @@
                 var filterString = $('#searchX').val();
                 var allowDup = document.getElementById('allowDup');
 
-
                 if (filterString == '' || filterRow(data, filterString)) {
 
                     // if Dup not allowed
                     if (findDup(data) && allowDup.checked == false){
-                        console.log("Already Exists!");
+                        console.log(data + "Already Exists!");
                         return false;
                     }
-                    EXTRACTED_POKEMON.push(data);
-                    console.log("data added: " + data);
                     return true;
                 }
                 return false;
@@ -217,10 +217,15 @@
     //return true if duplicated
     function findDup(pkm){
         result = false;
-        EXTRACTED_POKEMON.forEach(function(elem){
-            if (elem[1] === pkm[1])  result = true;
+    
+        EXTRACTED_POKEMON.forEach(function(elem){    
+            if (elem.split(",")[1] === pkm[1])  result = true;
         });
         return result;
+    }
+
+    function clearExtractedPkm(){
+        return null;
     }
 </script>
 
