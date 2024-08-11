@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
 
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css"/>
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
@@ -19,12 +19,12 @@
             <input type="text" id="searchX" name="searchX" placeholder="검색어" style="width:50%;"/><br>
             <div class="spacer"></div>
 
-            <input type="text" id="tableLength" name="tableLength" placeholder="행 개수" style="width:10%;"/>
+            <input type="text" id="tableLength" name="tableLength" placeholder="행 개수" value=20 style="width:10%;"/>
             <div class="spacer"></div>
 
             <label>
                 <input type="checkbox" id= "allowDup" name="cb_allowDup" value="AllowDup">
-                중복 허용
+                중복 허용 여부
             </label>
             <div class="spacer"></div>
 
@@ -50,27 +50,6 @@
 </body>
 
 <!-- Actual Datas -->
-<script>
-    // Pokemon to be extracted
-    var EXTRACTED_POKEMON = [];
-
-    var DEFAULT_ATTACKER_LEVEL = 40;
-    var DEFAULT_ATTACKER_CPM = 0.7903;
-    var DEFAULT_ATTACKER_IVs = [15, 15, 15];
-    var DEFAULT_ENEMY_DPS1 = 900;
-    var DEFAULT_ENEMY_LEVEL = 40;
-    var DEFAULT_ENEMY_CPM = 0.7903;
-    var DEFAULT_ENEMY_IVs = [15, 15, 15];
-    var DEFAULT_ENEMY_CURRENT_DEFENSE = 160;
-    var DEFAULT_ENEMY_POKETYPE1 = 'none';
-    var DEFAULT_ENEMY_POKETYPE2 = 'none';
-    var DEFAULT_WEATHER = 'EXTREME';
-    var DEFAULT_TOTAL_ENERGY_GAINED = 400;
-    var DEFAULT_STAB = 1.2;
-    var GM = {};
-    var list = [];
-</script>
-
 <script src="dataFetcher.js"></script>
 <script src="calculator.js"></script>
 <script src="pokeInfoFetcher.js"></script>
@@ -97,21 +76,25 @@
             columns: tableColumns,
             scrollX: true
         });
+
         const dummyEnemy = {
             name: "noTypeDummy",
             pokeType: DEFAULT_ENEMY_POKETYPE1,
             def: DEFAULT_ENEMY_CURRENT_DEFENSE
         };
+
         const fastMoveDict = Data.FastMoves.reduce((acc,move)=>{
             acc[move.name] = move;
             return acc;
         }
         , {});
+
         const chargedMoveDict = Data.ChargedMoves.reduce((acc,move)=>{
             acc[move.name] = move;
             return acc;
         }
         , {});
+
         var Context = {
             weather: DEFAULT_WEATHER,
             enemy: {},
@@ -123,8 +106,10 @@
             allyMega: false,
             allyMegaStab: false
         };
+
         Context.genericEnemy = true;
         Context.enemy = dummyEnemy;
+
         var ShadowPokemon = [];
 
         for (let pkm of Data.Pokemon) {
@@ -135,6 +120,7 @@
                 ShadowPokemon.push(shadowPkmInstance);
             }
         }
+
         var PokemonCollection = [];
         PokemonCollection = Data.Pokemon.concat(ShadowPokemon);
         for (let pkm of PokemonCollection) {

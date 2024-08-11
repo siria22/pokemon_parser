@@ -1,3 +1,24 @@
+// Pokemon to be extracted
+var EXTRACTED_POKEMON = [];
+
+// Default Datas
+var DEFAULT_ATTACKER_LEVEL = 40;
+var DEFAULT_ATTACKER_CPM = 0.7903;
+var DEFAULT_ATTACKER_IVs = [15, 15, 15];
+var DEFAULT_ENEMY_DPS1 = 900;
+var DEFAULT_ENEMY_LEVEL = 40;
+var DEFAULT_ENEMY_CPM = 0.7903;
+var DEFAULT_ENEMY_IVs = [15, 15, 15];
+var DEFAULT_ENEMY_CURRENT_DEFENSE = 160;
+var DEFAULT_ENEMY_POKETYPE1 = 'none';
+var DEFAULT_ENEMY_POKETYPE2 = 'none';
+var DEFAULT_WEATHER = 'EXTREME';
+var DEFAULT_TOTAL_ENERGY_GAINED = 400;
+var DEFAULT_STAB = 1.2;
+var GM = {};
+var list = [];
+
+// Actual pkm datas
 var Data = {
     BattleSettings: {
         'dodgeDurationMs': 500,
