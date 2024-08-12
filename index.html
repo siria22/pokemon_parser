@@ -1,7 +1,8 @@
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css"/>
     <link rel="stylesheet" href="styles.css">
@@ -11,21 +12,21 @@
 
 <body>
 
-    <!-- Condition -->
+    <!-- Condition Form -->
     <div id="condition" style="padding-bottom:10px;">
 
         <form id="setCondition" style="margin: 15px;">
             
-            <div>version 0.0.2</div>
+            <div>version 0.1.0</div>
 
-            <input type="text" id="searchX" name="searchX" placeholder="검색어" style="width:50%;"/><br>
+            <input type="text" id="Filter" name="Filter" placeholder="검색어" style="width:50%;"/><br>
             <div class="spacer"></div>
 
-            <input type="text" id="tableLength" name="tableLength" placeholder="행 개수" value=20 style="width:10%;"/> 개
+            <input type="text" id="LengthOfTb" name="LengthOfTb" placeholder="행 개수 (기본값 20)" value=20 style="width:10%;"/> 개
             <div class="spacer"></div>
 
             <label>
-                <input type="checkbox" id= "allowDup" name="cb_allowDup" value="AllowDup">
+                <input type="checkbox" id= "AllowDup" name="AllowDup">
                 중복 허용 여부
             </label>
             <div class="spacer"></div>
@@ -36,197 +37,43 @@
             <div class="spacer"></div>
 
             <button id="btn_extractAsCsv" type="button">Extract as .csv</button>
-            <p>테스트 중!</p>
 
         </form>
     </div>
 
-    <div class="table-wrapper">
-        <table id="ranking_table" class="table table-striped table-bordered nowrap" style="width:100%;">
+    <!-- Table -->
+    <div class="table">
+        <table id="pkm_table" class="table table-striped table-bordered nowrap" style="width:100%;">
             <thead>
+                <tr>
+                    <th>포켓몬</th>
+                    <th>포켓몬 타입 1</th>
+                    <th>포켓몬 타입 2</th>
+                    <th>일반공격</th>
+                    <th>차징공격</th>
+                    <th>DPS</th>
+                    <th>TDO</th>
+                    <th>ER</th>
+                    <th>CP</th>
+                </tr>
             <tfoot>
             <tbody>
+                <script src="pkmDatas.js"></script>
+                <script src="pkmCollectionInitializer.js"></script>
+                <script src="csvExtractor.js"></script>
+                <script src="tableGenerator.js"></script>
+                <script>
+                    drawTable();
+                </script>
+            </tbody>
         </table>
     </div>
 
+    <!-- Scripts -->
+
+
+    <script>
+
+        $('#btn_query').click(applyFilter);
+    </script>
 </body>
-
-<!-- Actual Datas -->
-<script src="dataFetcher.js"></script>
-<script src="calculator.js"></script>
-<script src="pokeInfoFetcher.js"></script>
-<script src="tableGenerator.js"></script>
-
-<script>
-    // Load Table
-    $(function() {
-        fetchPokemon();
-        fetchMegaPokemon();
-        fetchFastMove();
-        fetchChargedMove();
-        var tableColumns = fetchTableColumns();
-        EXTRACTED_POKEMON.push(`,이름,타입1,타입2,일반 공격,차징 공격,DPS,TDO,ER,CP,\n`);
-
-        //Table Definition
-        var table = $("#ranking_table").DataTable({
-            lengthChange: false,
-            autoWidth: false,
-            deferRender: true,
-            responsive: true,
-            sDom: 'lrtip',
-            pageLength: 20,
-            columns: tableColumns,
-            scrollX: true
-        });
-
-        const dummyEnemy = {
-            name: "noTypeDummy",
-            pokeType: DEFAULT_ENEMY_POKETYPE1,
-            def: DEFAULT_ENEMY_CURRENT_DEFENSE
-        };
-
-        const fastMoveDict = Data.FastMoves.reduce((acc,move)=>{
-            acc[move.name] = move;
-            return acc;
-        }
-        , {});
-
-        const chargedMoveDict = Data.ChargedMoves.reduce((acc,move)=>{
-            acc[move.name] = move;
-            return acc;
-        }
-        , {});
-
-        var Context = {
-            weather: DEFAULT_WEATHER,
-            enemy: {},
-            genericEnemy: false,
-            genericEnemyFastMove: false,
-            genericEnemyChargedMove: false,
-            swapDiscount: false,
-            battleMode: 'pve',
-            allyMega: false,
-            allyMegaStab: false
-        };
-
-        Context.genericEnemy = true;
-        Context.enemy = dummyEnemy;
-
-        var ShadowPokemon = [];
-
-        for (let pkm of Data.Pokemon) {
-            if (pkm.hasShadow) {
-                var shadowPkmInstance = {};
-                $.extend(shadowPkmInstance, pkm);
-                shadowPkmInstance.isShadow = true;
-                ShadowPokemon.push(shadowPkmInstance);
-            }
-        }
-
-        var PokemonCollection = [];
-        PokemonCollection = Data.Pokemon.concat(ShadowPokemon);
-        for (let pkm of PokemonCollection) {
-            if (pkm.isShadow) {
-                pkm.name = "그림자 " + pkm.name;
-            }
-            if (pkm.isPurified) {
-                pkm.name = "정화 " + pkm.name;
-            }
-            if (pkm.form !== "normal") {
-                pkm.name = pkm.name + "(" + (pkm.form_kor ? pkm.form_kor : pkm.form) + ")";
-            }
-            if (pkm.baseAtk < 1 || pkm.baseDef < 1 || pkm.baseStm < 1) {
-                continue;
-            }
-            pkm.cpm = DEFAULT_ATTACKER_CPM;
-            pkm.cp = calculateCP(pkm);
-            pkm.atk = (pkm.baseAtk + DEFAULT_ATTACKER_IVs[0]) * pkm.cpm * (pkm.isShadow ? Data.BattleSettings.shadowPokemonAttackBonusMultiplier : 1);
-            pkm.def = (pkm.baseDef + DEFAULT_ATTACKER_IVs[1]) * pkm.cpm * (pkm.isShadow ? Data.BattleSettings.shadowPokemonDefenseBonusMultiplier : 1);
-            pkm.stm = (pkm.baseStm + DEFAULT_ATTACKER_IVs[2]) * pkm.cpm;
-
-            var TypeTranslation = Data.BattleSettings.TypeTranslation;
-            pkm.pokeType1_kor = TypeTranslation[pkm.pokeType[0]];
-            pkm.pokeType2_kor = TypeTranslation[pkm.pokeType[1]] == undefined ? "단일" : TypeTranslation[pkm.pokeType[1]];
-            for (let fmove of pkm.fastMove) {
-                for (let cmove of pkm.chargedMove) {
-                    var pkmInstance = {};
-                    $.extend(pkmInstance, pkm);
-                    var fmoveInstance = fastMoveDict[fmove];
-                    var cmoveInstance = chargedMoveDict[cmove];
-                    pkmInstance.fmove = fmoveInstance ? fmoveInstance : "none";
-                    pkmInstance.cmove = cmoveInstance ? cmoveInstance : "none";
-                    if (pkmInstance.fmove == "none" || pkmInstance.cmove == "none") {
-                        continue;
-                    }
-                    calculateDPS(pkmInstance, Context);
-                    pkmInstance.dps = round(pkmInstance.dps, 3).toString();
-                    pkmInstance.tdo = round(pkmInstance.tdo, 1).toString();
-                    pkmInstance.overall = round((pkmInstance.dps ** 3 * pkmInstance.tdo) ** 0.25, 2).toString();
-                    pkmInstance.fmove.type_kor = TypeTranslation[pkmInstance.fmove.type];
-                    pkmInstance.cmove.type_kor = TypeTranslation[pkmInstance.cmove.type];
-                    table.row.add(pkmInstance);
-                    
-                    EXTRACTED_POKEMON.push(pkmDTO(pkmInstance));
-                }
-            }
-        }
-        table.order([4, 'desc']);
-        table.draw();
-
-        // submit condition 버튼을 클릭할 경우
-        $('#btn_query').click(function() {
-            console.clear();
-
-            var filterString = $('#searchX').val();
-            var allowDup = document.getElementById('allowDup');
-            console.log("search : "+filterString);
-            console.log("allowDup : "+allowDup.checked);
-            
-            var newPageLength = parseInt($('#tableLength').val());
-
-            if (isNaN(newPageLength) || newPageLength <= 0) {
-                alert('행 개수는 0 이상이어야 함!\n(기본값 : 20으로 설정)');
-                newPageLength = 20;
-            }
-
-            // Update DataTable 
-            table.page.len(newPageLength).draw();
-            table.draw();
-
-        });
-
-        $.fn.dataTable.ext.search.push(
-            function(settings, data, dataIndex) {
-                var filterString = $('#searchX').val();
-                var allowDup = document.getElementById('allowDup');
-
-                if (filterString == '' || filterRow(data, filterString)) {
-
-                    // if Dup not allowed
-                    if (findDup(data) && allowDup.checked == false){
-                        console.log(data + "Already Exists!");
-                        return false;
-                    }
-                    return true;
-                }
-                return false;
-            }
-        );
-    });
-
-    //return true if duplicated
-    function findDup(pkm){
-        result = false;
-    
-        EXTRACTED_POKEMON.forEach(function(elem){    
-            if (elem.split(",")[1] === pkm[1])  result = true;
-        });
-        return result;
-    }
-
-    function clearExtractedPkm(){
-        return null;
-    }
-</script>
-
-<script src="csvExtractor.js"></script>

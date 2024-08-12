@@ -1,3 +1,5 @@
+var pkmCollection = [];
+
 function calculateDPS(pokemon, kwargs) {
     var x = kwargs.x
         , y = kwargs.y;
@@ -34,6 +36,7 @@ function calculateDPS(pokemon, kwargs) {
 }
 
 function calculateDPSIntake(pokemon, kwargs) {
+
     if (kwargs.genericEnemy) {
         if (kwargs.battleMode == "pvp") {
             return {
@@ -74,4 +77,66 @@ function calculateCP(pkm) {
     var def = pkm.def || (pkm.baseDef + DEFAULT_ATTACKER_IVs[1]) * cpm;
     var stm = pkm.stm || (pkm.baseStm + DEFAULT_ATTACKER_IVs[2]) * cpm;
     return Math.max(10, Math.floor(atk * Math.sqrt(def * stm) / 10));
+}
+
+function constructPkmCollection(){
+    console.log("construct pkmCollection");
+    for (let pkm of Data.Pokemon){
+        if (pkm.baseAtk < 1 || pkm.baseDef < 1 || pkm.baseStm < 1) {
+            continue;
+        }
+        // cpm, cp, atk, def 추가
+        pkm.cpm = DEFAULT_ATTACKER_CPM;
+        pkm.cp = calculateCP(pkm);
+        pkm.atk = (pkm.baseAtk + DEFAULT_ATTACKER_IVs[0]) * pkm.cpm * (pkm.isShadow ? Data.BattleSettings.shadowPokemonAttackBonusMultiplier : 1);
+        pkm.def = (pkm.baseDef + DEFAULT_ATTACKER_IVs[1]) * pkm.cpm * (pkm.isShadow ? Data.BattleSettings.shadowPokemonDefenseBonusMultiplier : 1);
+        pkm.stm = (pkm.baseStm + DEFAULT_ATTACKER_IVs[2]) * pkm.cpm;
+
+        pkm.pokeType1_kor = Data.BattleSettings.TypeTranslation[pkm.pokeType[0]];
+        pkm.pokeType2_kor = Data.BattleSettings.TypeTranslation[pkm.pokeType[1]] == undefined ? "단일" : Data.BattleSettings.TypeTranslation[pkm.pokeType[1]];
+        
+        //모든 case를 고려해야 함
+        for (let fmove of pkm.fastMove) {
+            for (let cmove of pkm.chargedMove) {
+
+                let pkmCopy = { ...pkm };
+
+                if(fmove == undefined || cmove == undefined){
+                    continue;
+                }
+
+                pkmCopy.fmove = Data.FastMoves.find(trg => trg.name.toLowerCase() === fmove.toLowerCase());
+                pkmCopy.cmove = Data.ChargedMoves.find(trg => trg.name.toLowerCase() === cmove.toLowerCase());
+                
+                // fmove
+                try{
+                    pkmCopy.fmove_kor = pkmCopy.fmove.name_kor;
+                }catch (e){
+                    console.warn("undefined fmove : "+fmove);
+                    pkmCopy.fmove = Data.FastMoves.find(trg => trg.name === "Dummy_FastMove");
+                    pkmCopy.fmove_kor = pkmCopy.fmove.name_kor;
+                }
+
+                // cmove
+                try{
+                    pkmCopy.cmove_kor = pkmCopy.cmove.name_kor;
+                }catch (e){
+                    console.warn("undefined cmove : "+cmove);
+                    pkmCopy.cmove = Data.ChargedMoves.find(trg => trg.name === "Dummy_ChargedMove");
+                    pkmCopy.cmove_kor = pkmCopy.cmove.name_kor;
+                }
+
+                
+                pkmCopy.dps = calculateDPS(pkmCopy, Context);
+                pkmCopy.dps = round(pkmCopy.dps, 3);
+                pkmCopy.tdo = round(pkmCopy.tdo, 1);
+                pkmCopy.overall = round((pkmCopy.dps ** 3 * pkmCopy.tdo) ** 0.25, 2);
+
+                pkmCollection.push(pkmCopy);
+            }
+        }
+        
+    }
+    console.log("construct pkmCollection..end");
+
 }

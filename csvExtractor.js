@@ -1,3 +1,6 @@
+var filteredPkmCollection = [];
+var downloadAllowed = false;
+
 function downloadCSV(csvData, filename = 'data.csv') {
     const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
@@ -8,17 +11,21 @@ function downloadCSV(csvData, filename = 'data.csv') {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+    console.log("Exported as .csv");
 }
 
 document.getElementById('btn_extractAsCsv')
-        .addEventListener('click', function() {
-                const csvData = EXTRACTED_POKEMON;
-                downloadCSV(csvData);
-            }
-        );
+    .addEventListener('click', function () {
+        const csvData = filteredPkmCollection;
+        downloadCSV(csvData);
+    }
+);
 
+function pkmDTO(pkm) {
+    return `${pkm.name},${pkm.pokeType1_kor},${pkm.pokeType2_kor},${pkm.fmove_kor},${pkm.cmove_kor},${pkm.dps},${pkm.tdo},${pkm.overall},${pkm.cp}\n`;
+}
 
-function pkmDTO(pkmInstance){
-    let data = `${pkmInstance.name},${pkmInstance.pokeType1_kor},${pkmInstance.pokeType2_kor},${pkmInstance.fmove.name_kor},${pkmInstance.cmove.name_kor},${pkmInstance.dps},${pkmInstance.tdo},${pkmInstance.overall},${pkmInstance.cp},\n`;
-    return data;
+function initFilteredCollection(){
+    filteredPkmCollection = [];
+    filteredPkmCollection.push(",포켓몬,포켓몬 타입1,포켓몬 타입2,일반 공격,차징 공격,DPS,TDO,ER,CP\n");
 }

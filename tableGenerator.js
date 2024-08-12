@@ -1,66 +1,71 @@
+var table;
+
 function fetchTableColumns(){
     return [{
-        title: "CP",
-        data: "cp",
-        width: "10%",
-        searchable: false
-    }, {
         title: "포켓몬",
         data: "name",
-        width: "20%"
+        width: "2fr",
+        searchable: true
+    }, {
+        title: "타입 1",
+        data: "pokeType1_kor",
+        width: "2fr"
+    }, {
+        title: "타입 2",
+        data: "pokeType2_kor",
+        type: "string",
+        width: "2fr"
     }, {
         title: "일반공격",
-        data: "fmove.name_kor",
+        data: "fmove_kor",
         type: "string",
-        width: "20%"
+        width: "2fr"
     }, {
         title: "차징공격",
-        data: "cmove.name_kor",
+        data: "cmove_kor",
         type: "string",
-        width: "20%"
+        width: "2fr"
     }, {
         title: "DPS",
         data: "dps",
         type: "num",
-        width: "10%",
+        width: "1fr",
         orderSequence: ["desc", "asc"],
         searchable: false
     }, {
         title: "TDO",
         data: "tdo",
         type: "num",
-        width: "10%",
+        width: "1fr",
         orderSequence: ["desc", "asc"],
         searchable: false
     }, {
         title: "ER",
         data: "overall",
         type: "num",
-        width: "10%",
+        width: "1fr",
         orderSequence: ["desc", "asc"],
         searchable: false
     }, {
-        title: "포켓몬속성1",
-        data: "pokeType1_kor",
-        visible: false
+        title: "CP",
+        data: "cp",
+        type: "num",
+        width: "1fr",
+        orderSequence: ["desc", "asc"],
+        searchable: false
     }, {
-        title: "포켓몬속성2",
-        data: "pokeType2_kor",
-        visible: false
-    }, {
-        title: "일반공격속성",
+        title: "일반공격속성", //9
         data: "fmove.type_kor",
-        visible: false
+        visible: false 
     }, {
-        title: "차징공격속성",
+        title: "차징공격속성", //10
         data: "cmove.type_kor",
         visible: false
     }]; 
 }
 
 // Filters
-
-function filterRow(str, filterString) {
+function filterRow(data, filterString) {
     const conditions = filterString.split(/([&,])/).map(cond=>cond.trim()).filter(Boolean);
     var result = null;
     var currentOp = null;
@@ -71,9 +76,9 @@ function filterRow(str, filterString) {
         } else {
             var conditionResult = null;
             if (condition.startsWith("!")) {
-                conditionResult = !applyStringCondition(str, condition.substring(1));
+                conditionResult = !applyStringCondition(data, condition.substring(1));
             } else {
-                conditionResult = applyStringCondition(str, condition);
+                conditionResult = applyStringCondition(data, condition);
             }
             if (currentOp === "&") {
                 result = result && conditionResult;
@@ -101,25 +106,36 @@ function applyStringCondition(data, condition) {
         } else {
             return (data[9].normalize("NFC").includes(condition.substring(2)));
         }
-    } else if (condition.startsWith("@2")) {
+    } 
+
+    else if (condition.startsWith("@2")) {
         if (isEmptyString(condition, 2)) {
             return true;
         } else {
             return (data[10].normalize("NFC").includes(condition.substring(2)));
         }
-    } else if (condition.startsWith("@@")) {
+    } 
+
+    else if (condition.startsWith("@@")) {
         if (isEmptyString(condition, 2)) {
             return true;
         } else {
             return (data[9].normalize("NFC").includes(condition.substring(2))) && (data[10].normalize("NFC").includes(condition.substring(2)));
         }
-    } else if (condition.startsWith("@")) {
+    } 
+
+    else if (condition.startsWith("@")) {
         if (isEmptyString(condition, 1)) {
             return true;
         } else {
-            return (data[9].normalize("NFC").includes(condition.substring(1)) || data[10].normalize("NFC").includes(condition.substring(1)) || data[2].normalize("NFC").includes(condition.substring(1)) || data[3].normalize("NFC").includes(condition.substring(1)));
+            return (data[3].normalize("NFC").includes(condition.substring(1)) 
+                || data[4].normalize("NFC").includes(condition.substring(1)) 
+                || data[9].normalize("NFC").includes(condition.substring(1)) 
+                || data[10].normalize("NFC").includes(condition.substring(1)));
         }
-    } else if (condition.startsWith(">>")) {
+    } 
+
+    else if (condition.startsWith(">>")) {
         if (isEmptyString(condition, 2)) {
             return true;
         } else {
@@ -129,7 +145,7 @@ function applyStringCondition(data, condition) {
             var result1 = 1;
             var result2 = 1;
             var length = dualType.length > 1 ? 2 : 1;
-            var fmoveTypeEng = Translation[data[9].normalize("NFC")];
+            var fmoveTypeEng = Translation[data[921].normalize("NFC")];
             var cmoveTypeEng = Translation[data[10].normalize("NFC")];
             var opponentTypeEng = Translation[condition.substring(2).normalize("NFC")];
             for (let i = 0; i < length; i++) {
@@ -139,7 +155,9 @@ function applyStringCondition(data, condition) {
             }
             return (result1 > 1) && (result2 > 1);
         }
-    } else if (condition.startsWith(">")) {
+    } 
+    
+    else if (condition.startsWith(">")) {
         if (isEmptyString(condition, 1)) {
             return true;
         } else {
@@ -155,7 +173,9 @@ function applyStringCondition(data, condition) {
             }
             return result > 1;
         }
-    } else if (condition.startsWith("<")) {
+    } 
+    
+    else if (condition.startsWith("<")) {
         if (isEmptyString(condition, 1)) {
             return true;
         } else {
@@ -168,7 +188,9 @@ function applyStringCondition(data, condition) {
             var multi2 = Effectiveness[cmoveTypeEng][opponentTypeEng2] || 1;
             return (multi1 * multi2) > 1;
         }
-    } else if (condition.startsWith("^")) {
+    } 
+    
+    else if (condition.startsWith("^")) {
         if (isEmptyString(condition, 1)) {
             return true;
         } else {
@@ -181,7 +203,80 @@ function applyStringCondition(data, condition) {
             var multi2 = Effectiveness[cmoveTypeEng][opponentTypeEng2] || 1;
             return (multi1 * multi2) < 1;
         }
-    } else {
+    } 
+    
+    else {
         return data[1].normalize("NFC").includes(condition) || data[7].normalize("NFC").includes(condition) || data[8].normalize("NFC").includes(condition);
     }
+}
+
+function drawTable(){
+    fetchFastMove();
+    fetchChargedMove();
+    fetchPokemon();
+    fetchMegaPokemon();
+    fetchShadowPokemon();
+    constructPkmCollection();
+    initFilteredCollection();
+    var tableColumns = fetchTableColumns();
+
+    console.log("Init table");
+
+    //Table Definition
+    table = $("#pkm_table").DataTable({
+        lengthChange: false,
+        autoWidth: false,
+        deferRender: true,
+        responsive: true,
+        sDom: 'lrtip',
+        pageLength: 20,
+        columns: tableColumns,
+        scrollX: true
+    });
+
+    console.log("add rows");
+    pkmCollection.forEach(
+        pkm => {
+            table.row.add(pkm);
+            filteredPkmCollection.push(pkmDTO(pkm));
+        }
+    );
+    
+    table.order([4, 'desc']).draw();
+    
+    console.log("Table Loaded...");
+}
+
+function applyFilter(){
+    console.log("Apply Filters...");
+
+    // init. Filter
+    $.fn.dataTable.ext.search = [];
+    initFilteredCollection();
+
+    // filtering conditions
+    var filterString = document.getElementById('Filter').value;
+    var allowDup = document.getElementById('AllowDup');
+    var tableLength = parseInt($('#LengthOfTb').val());
+
+    if (isNaN(tableLength) || tableLength <= 0) {
+        alert('행 개수 = 0 이상의 정수\n(기본값 : 20으로 설정됨)');
+        tableLength = 20;
+    }
+    console.log("search : "+filterString);
+    console.log("allowDup : "+allowDup.checked);
+    console.log("tableLength : "+tableLength);
+
+    $.fn.dataTable.ext.search.push(
+        function(settings, data, dataIndex) {
+            if (filterString == '' || filterRow(data, filterString)) {   
+                let rawData = table.row(dataIndex).data();
+                filteredPkmCollection.push(pkmDTO(rawData));
+                return true;
+            }
+            return false;
+        }
+    );
+    table.page.len(tableLength).draw();
+    console.log("Filtering complete");
 }
