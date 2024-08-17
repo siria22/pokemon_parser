@@ -247,6 +247,7 @@ function drawTable(){
     console.log("Table Loaded...");
 }
 
+
 function applyFilter(){
     console.log("Apply Filters...");
 
@@ -267,16 +268,66 @@ function applyFilter(){
     console.log("allowDup : "+allowDup.checked);
     console.log("tableLength : "+tableLength);
 
+    // Filter : Search option 
     $.fn.dataTable.ext.search.push(
         function(settings, data, dataIndex) {
             if (filterString == '' || filterRow(data, filterString)) {   
                 let rawData = table.row(dataIndex).data();
                 filteredPkmCollection.push(pkmDTO(rawData));
+
                 return true;
             }
             return false;
         }
     );
+
+
+    // Filter : Handle Dup
+    // if(!allowDup.checked){
+
+    //     let uniquePkmCollection = [];
+    //     initFilteredCollection();
+    //     console.log("AllowDup");
+    //     // iterate
+    //     pkmCollection.forEach(pkm => {
+
+    //         let pushNeeded = false;
+
+    //         while(true){
+    //             let matched = uniquePkmCollection.find(elem => elem.name === pkm.name);
+    //             if(matched == undefined){
+    //                 pushNeeded = true;
+    //                 break;
+    //             }else{
+    //                 if (matched.overall < pkm.overall){
+    //                     let index = uniquePkmCollection.indexOf(matched);
+    //                     uniquePkmCollection.splice(index, 1);
+    //                     pushNeeded = true;
+    //                 }
+    //                 else if(matched.overall == pkm.overall){
+    //                     pushNeeded = true;
+    //                     break;
+    //                 }
+    //             }
+    //         }
+    //         if(pushNeeded)
+    //             uniquePkmCollection.push(pkm);
+    //     });
+
+    //     console.log("AllowDup_2");
+    //     $.fn.dataTable.ext.search.push(
+    //         function(settings, data, dataIndex) {
+    //             if (uniquePkmCollection.findIndex(data)) {   
+    //                 let rawData = table.row(dataIndex).data();
+    //                 filteredPkmCollection.push(pkmDTO(rawData));
+    //                 return true;
+    //             }
+    //             return false;
+    //         }
+    //     );
+    //     console.log("AllowDup_end")
+    // }
+    
     table.page.len(tableLength).draw();
     console.log("Filtering complete");
 }
