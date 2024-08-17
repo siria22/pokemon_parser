@@ -61,6 +61,10 @@ function fetchTableColumns(){
         title: "차징공격속성", //10
         data: "cmove.type_kor",
         visible: false
+    // }, {
+    //     title: "티어",
+    //     data: "tier",
+    //     visible: true
     }]; 
 }
 
@@ -80,6 +84,7 @@ function filterRow(data, filterString) {
             } else {
                 conditionResult = applyStringCondition(data, condition);
             }
+
             if (currentOp === "&") {
                 result = result && conditionResult;
             } else if (currentOp === ",") {
@@ -206,7 +211,7 @@ function applyStringCondition(data, condition) {
     } 
     
     else {
-        return data[1].normalize("NFC").includes(condition) || data[7].normalize("NFC").includes(condition) || data[8].normalize("NFC").includes(condition);
+        return data[0].normalize("NFC").includes(condition) || data[1].normalize("NFC").includes(condition) || data[7].normalize("NFC").includes(condition) || data[8].normalize("NFC").includes(condition);
     }
 }
 
@@ -282,52 +287,6 @@ function applyFilter(){
     );
 
 
-    // Filter : Handle Dup
-    // if(!allowDup.checked){
-
-    //     let uniquePkmCollection = [];
-    //     initFilteredCollection();
-    //     console.log("AllowDup");
-    //     // iterate
-    //     pkmCollection.forEach(pkm => {
-
-    //         let pushNeeded = false;
-
-    //         while(true){
-    //             let matched = uniquePkmCollection.find(elem => elem.name === pkm.name);
-    //             if(matched == undefined){
-    //                 pushNeeded = true;
-    //                 break;
-    //             }else{
-    //                 if (matched.overall < pkm.overall){
-    //                     let index = uniquePkmCollection.indexOf(matched);
-    //                     uniquePkmCollection.splice(index, 1);
-    //                     pushNeeded = true;
-    //                 }
-    //                 else if(matched.overall == pkm.overall){
-    //                     pushNeeded = true;
-    //                     break;
-    //                 }
-    //             }
-    //         }
-    //         if(pushNeeded)
-    //             uniquePkmCollection.push(pkm);
-    //     });
-
-    //     console.log("AllowDup_2");
-    //     $.fn.dataTable.ext.search.push(
-    //         function(settings, data, dataIndex) {
-    //             if (uniquePkmCollection.findIndex(data)) {   
-    //                 let rawData = table.row(dataIndex).data();
-    //                 filteredPkmCollection.push(pkmDTO(rawData));
-    //                 return true;
-    //             }
-    //             return false;
-    //         }
-    //     );
-    //     console.log("AllowDup_end")
-    // }
-    
     table.page.len(tableLength).draw();
     console.log("Filtering complete");
 }

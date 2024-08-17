@@ -79,6 +79,7 @@ function calculateCP(pkm) {
     return Math.max(10, Math.floor(atk * Math.sqrt(def * stm) / 10));
 }
 
+
 function constructPkmCollection(){
     console.log("construct pkmCollection");
     for (let pkm of Data.Pokemon){
@@ -104,13 +105,18 @@ function constructPkmCollection(){
                 if(fmove == undefined || cmove == undefined){
                     continue;
                 }
-
-                pkmCopy.fmove = Data.FastMoves.find(trg => trg.name.toLowerCase() === fmove.toLowerCase());
-                pkmCopy.cmove = Data.ChargedMoves.find(trg => trg.name.toLowerCase() === cmove.toLowerCase());
+                
+                pkmCopy.fmove = Data.FastMoves.find(trg => trg.name.toLowerCase() === fmove.replace(" *", "").toLowerCase());
+                pkmCopy.cmove = Data.ChargedMoves.find(trg => trg.name.toLowerCase() === cmove.replace(" *", "").toLowerCase());
                 
                 // fmove
                 try{
-                    pkmCopy.fmove_kor = pkmCopy.fmove.name_kor;
+                    if(fmove.includes(" *")){
+                        pkmCopy.fmove_kor = pkmCopy.fmove.name_kor + " *";
+                    }
+                    else{
+                        pkmCopy.fmove_kor = pkmCopy.fmove.name_kor;
+                    }
                 }catch (e){
                     console.warn("undefined fmove : "+fmove);
                     pkmCopy.fmove = Data.FastMoves.find(trg => trg.name === "Dummy_FastMove");
@@ -119,7 +125,13 @@ function constructPkmCollection(){
 
                 // cmove
                 try{
-                    pkmCopy.cmove_kor = pkmCopy.cmove.name_kor;
+                    if(cmove.includes(" *")){
+                        pkmCopy.cmove_kor = pkmCopy.cmove.name_kor + " *";
+                    }
+                    else{
+                        pkmCopy.cmove_kor = pkmCopy.cmove.name_kor;
+                    }
+                  
                 }catch (e){
                     console.warn("undefined cmove : "+cmove);
                     pkmCopy.cmove = Data.ChargedMoves.find(trg => trg.name === "Dummy_ChargedMove");

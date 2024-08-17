@@ -3871,7 +3871,7 @@ function fetchChargedMove() {
         "duration": 2000,
         "energy_delta": -33,
         "move_id": 382,
-        "name": "Myst Fire",
+        "name": "Mystical Fire",
         "power": 60,
         "stamina_loss_scaler": 0.01,
         "type": "Fire",
@@ -4126,6 +4126,19 @@ function fetchChargedMove() {
     });
     Data.ChargedMoves.sort((a,b)=>(a.name < b.name ? -1 : 1));
     Data.ChargedMoves.sorted = true;
+}
+
+function markElitMoves(moves){
+
+    if(Array.isArray(moves) == false){
+        return [];
+    }
+    var markedMoves = [];
+    
+    for(var i=0; i<moves.length; i++){
+        markedMoves.push(moves[i]+" *");
+    }
+    return markedMoves;
 }
 
 function fetchPokemon() {
@@ -21201,13 +21214,19 @@ function fetchPokemon() {
             baseAtk: data[i].base_attack,
             baseDef: data[i].base_defense,
             baseStm: data[i].base_stamina,
-            fastMove: data[i].fast_moves.concat(data[i].elite_fast_moves),
-            chargedMove: data[i].charged_moves.concat(data[i].elite_charged_moves).concat(data[i].exclusive_charged_moves),
             pokeType: data[i].type.map(x=>x.toLowerCase()),
             hasShadow: data[i].has_shadow,
             isShadow: data[i].is_shadow,
             isPurified: data[i].is_purified
         };
+
+        pkm.fastMove = data[i].fast_moves
+            .concat(markElitMoves(data[i].elite_fast_moves));
+
+        pkm.chargedMove = data[i].charged_moves
+            .concat(markElitMoves(data[i].elite_charged_moves))
+            .concat(markElitMoves(data[i].exclusive_charged_moves));
+                
         if(pkm.isShadow == true){
             pkm.name = "그림자 " + pkm.name;
         }
@@ -21992,8 +22011,6 @@ function fetchMegaPokemon() {
             baseAtk: data[i].stats.base_attack,
             baseDef: data[i].stats.base_defense,
             baseStm: data[i].stats.base_stamina,
-            fastMove: data[i].fast_moves.concat(data[i].elite_fast_moves).concat(data[i].exclusive_fast_moves),
-            chargedMove: data[i].charged_moves.concat(data[i].elite_charged_moves).concat(data[i].exclusive_charged_moves),
             pokeType: data[i].type.map(x=>x.toLowerCase())
         };
         if(pkm.isShadow == true){
@@ -22005,6 +22022,13 @@ function fetchMegaPokemon() {
         if (pkm.form !== "normal") {
             pkm.name = pkm.name + "(" + (pkm.form_kor ? pkm.form_kor : pkm.form) + ")";
         }
+        pkm.fastMove = data[i].fast_moves
+        .concat(markElitMoves(data[i].elite_fast_moves));
+
+        pkm.chargedMove = data[i].charged_moves
+            .concat(markElitMoves(data[i].elite_charged_moves))
+            .concat(markElitMoves(data[i].exclusive_charged_moves));
+            
         Data.Pokemon.push(pkm);
     });
     Data.Pokemon.sort((a,b)=>(a.name < b.name ? -1 : 1));

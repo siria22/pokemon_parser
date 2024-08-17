@@ -12,12 +12,16 @@ function downloadCSV(csvData, filename = 'data.csv') {
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
     console.log("Exported as .csv");
+    alert("파일이 \`"+filename+"\`으로 저장됨!");
 }
 
 document.getElementById('btn_extractAsCsv')
     .addEventListener('click', function () {
         const csvData = filteredPkmCollection;
-        downloadCSV(csvData);
+        var filterString = document.getElementById('Filter').value;
+        var fileName = (filterString == null) ? 'Default' : filterString;
+        
+        downloadCSV(csvData, fileName);
     }
 );
 
