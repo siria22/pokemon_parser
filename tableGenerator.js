@@ -211,7 +211,7 @@ function applyStringCondition(data, condition) {
     } 
     
     else {
-        return data[0].normalize("NFC").includes(condition) || data[1].normalize("NFC").includes(condition) || data[7].normalize("NFC").includes(condition) || data[8].normalize("NFC").includes(condition);
+        return data[0].normalize("NFC").includes(condition) || data[1].normalize("NFC").includes(condition) || data[2].normalize("NFC").includes(condition) || data[7].normalize("NFC").includes(condition) || data[8].normalize("NFC").includes(condition);
     }
 }
 
