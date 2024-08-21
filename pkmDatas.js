@@ -6702,7 +6702,7 @@ function fetchPokemon() {
         "elite_fast_moves": [],
         "fast_moves": ["Counter"],
         "pokemon_name_kor": "썬더",
-        "has_shadow": true
+        "has_shadow": false
     }, {
         "base_attack": 253,
         "base_defense": 185,
