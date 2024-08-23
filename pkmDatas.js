@@ -447,6 +447,7 @@ var Data = {
             "dragon": "드래곤",
             "flying": "비행",
             "psychic": "에스퍼",
+            "EX": "EX",
             "풀": "grass",
             "땅": "ground",
             "불꽃": "fire",
@@ -605,7 +606,9 @@ var Data = {
         "name": "15",
         "value": 15
     }],
-    Users: []
+    Users: [],
+    //Handle Exception
+    FastMovesHiddenPower: [],
 };
 
 const dummyEnemy = {
@@ -1271,17 +1274,6 @@ function fetchFastMove() {
         "damage_window_end": 1050,
         "name_kor": "바크아웃"
     }, {
-        "duration": 1500,
-        "energy_delta": 15,
-        "move_id": 281,
-        "name": "Hidden Power",
-        "power": 15,
-        "stamina_loss_scaler": 0.01,
-        "type": "Normal",
-        "damage_window_start": 1100,
-        "damage_window_end": 1400,
-        "name_kor": "잠재파워"
-    }, {
         "duration": 1200,
         "energy_delta": 10,
         "move_id": 282,
@@ -1534,24 +1526,262 @@ function fetchFastMove() {
         "damage_window_start": 1200,
         "damage_window_end": 2000,
         "name_kor": "발버둥"
+    }, {
+        //Dummy data
+        "duration": 1500,
+        "energy_delta": 15,
+        "move_id": 281,
+        "name": "Hidden Power",
+        "power": 15,
+        "stamina_loss_scaler": 0.01,
+        "type": "EX",
+        "damage_window_start": 1100,
+        "damage_window_end": 1400,
+        "name_kor": "잠재파워 _DUMMY_"
+    }, {
+        "duration": 1500,
+        "energy_delta": 15,
+        "move_id": 281,
+        "name": "Hidden Power (normal)",
+        "power": 15,
+        "stamina_loss_scaler": 0.01,
+        "type": "Normal",
+        "damage_window_start": 1100,
+        "damage_window_end": 1400,
+        "name_kor": "잠재파워 (노말)"
+    },
+    {
+        "duration": 1500,
+        "energy_delta": 15,
+        "move_id": 281,
+        "name": "Hidden Power (grass)",
+        "power": 15,
+        "stamina_loss_scaler": 0.01,
+        "type": "grass",
+        "damage_window_start": 1100,
+        "damage_window_end": 1400,
+        "name_kor": "잠재파워 (풀)"
+    },{
+        "duration": 1500,
+        "energy_delta": 15,
+        "move_id": 281,
+        "name": "Hidden Power (ground)",
+        "power": 15,
+        "stamina_loss_scaler": 0.01,
+        "type": "ground",
+        "damage_window_start": 1100,
+        "damage_window_end": 1400,
+        "name_kor": "잠재파워 (땅)"
+    },{
+        "duration": 1500,
+        "energy_delta": 15,
+        "move_id": 281,
+        "name": "Hidden Power (fire)",
+        "power": 15,
+        "stamina_loss_scaler": 0.01,
+        "type": "fire",
+        "damage_window_start": 1100,
+        "damage_window_end": 1400,
+        "name_kor": "잠재파워 (불)"
+    },{
+        "duration": 1500,
+        "energy_delta": 15,
+        "move_id": 281,
+        "name": "Hidden Power (dark)",
+        "power": 15,
+        "stamina_loss_scaler": 0.01,
+        "type": "dark",
+        "damage_window_start": 1100,
+        "damage_window_end": 1400,
+        "name_kor": "잠재파워 (어둠)"
+    },{
+        "duration": 1500,
+        "energy_delta": 15,
+        "move_id": 281,
+        "name": "Hidden Power (ghost)",
+        "power": 15,
+        "stamina_loss_scaler": 0.01,
+        "type": "ghost",
+        "damage_window_start": 1100,
+        "damage_window_end": 1400,
+        "name_kor": "잠재파워 (고스트)"
+    },{
+        "duration": 1500,
+        "energy_delta": 15,
+        "move_id": 281,
+        "name": "Hidden Power (fairy)",
+        "power": 15,
+        "stamina_loss_scaler": 0.01,
+        "type": "fairy",
+        "damage_window_start": 1100,
+        "damage_window_end": 1400,
+        "name_kor": "잠재파워 (페어리)"
+    },{
+        "duration": 1500,
+        "energy_delta": 15,
+        "move_id": 281,
+        "name": "Hidden Power (fighting)",
+        "power": 15,
+        "stamina_loss_scaler": 0.01,
+        "type": "fighting",
+        "damage_window_start": 1100,
+        "damage_window_end": 1400,
+        "name_kor": "잠재파워 (격투)"
+    },{
+        "duration": 1500,
+        "energy_delta": 15,
+        "move_id": 281,
+        "name": "Hidden Power (poison)",
+        "power": 15,
+        "stamina_loss_scaler": 0.01,
+        "type": "poison",
+        "damage_window_start": 1100,
+        "damage_window_end": 1400,
+        "name_kor": "잠재파워 (독)"
+    },{
+        "duration": 1500,
+        "energy_delta": 15,
+        "move_id": 281,
+        "name": "Hidden Power (rock)",
+        "power": 15,
+        "stamina_loss_scaler": 0.01,
+        "type": "rock",
+        "damage_window_start": 1100,
+        "damage_window_end": 1400,
+        "name_kor": "잠재파워 (바위)"
+    },{
+        "duration": 1500,
+        "energy_delta": 15,
+        "move_id": 281,
+        "name": "Hidden Power (water)",
+        "power": 15,
+        "stamina_loss_scaler": 0.01,
+        "type": "water",
+        "damage_window_start": 1100,
+        "damage_window_end": 1400,
+        "name_kor": "잠재파워 (물)"
+    },{
+        "duration": 1500,
+        "energy_delta": 15,
+        "move_id": 281,
+        "name": "Hidden Power (electric)",
+        "power": 15,
+        "stamina_loss_scaler": 0.01,
+        "type": "electric",
+        "damage_window_start": 1100,
+        "damage_window_end": 1400,
+        "name_kor": "잠재파워 (전기)"
+    },{
+        "duration": 1500,
+        "energy_delta": 15,
+        "move_id": 281,
+        "name": "Hidden Power (bug)",
+        "power": 15,
+        "stamina_loss_scaler": 0.01,
+        "type": "bug",
+        "damage_window_start": 1100,
+        "damage_window_end": 1400,
+        "name_kor": "잠재파워 (벌레)"
+    },{
+        "duration": 1500,
+        "energy_delta": 15,
+        "move_id": 281,
+        "name": "Hidden Power (ice)",
+        "power": 15,
+        "stamina_loss_scaler": 0.01,
+        "type": "ice",
+        "damage_window_start": 1100,
+        "damage_window_end": 1400,
+        "name_kor": "잠재파워 (얼음)"
+    },{
+        "duration": 1500,
+        "energy_delta": 15,
+        "move_id": 281,
+        "name": "Hidden Power (steel)",
+        "power": 15,
+        "stamina_loss_scaler": 0.01,
+        "type": "steel",
+        "damage_window_start": 1100,
+        "damage_window_end": 1400,
+        "name_kor": "잠재파워 (철)"
+    },{
+        "duration": 1500,
+        "energy_delta": 15,
+        "move_id": 281,
+        "name": "Hidden Power (dragon)",
+        "power": 15,
+        "stamina_loss_scaler": 0.01,
+        "type": "dragon",
+        "damage_window_start": 1100,
+        "damage_window_end": 1400,
+        "name_kor": "잠재파워 (드래곤)"
+    },{
+        "duration": 1500,
+        "energy_delta": 15,
+        "move_id": 281,
+        "name": "Hidden Power (flying)",
+        "power": 15,
+        "stamina_loss_scaler": 0.01,
+        "type": "flying",
+        "damage_window_start": 1100,
+        "damage_window_end": 1400,
+        "name_kor": "잠재파워 (비행)"
+    },{
+        "duration": 1500,
+        "energy_delta": 15,
+        "move_id": 281,
+        "name": "Hidden Power (psychic)",
+        "power": 15,
+        "stamina_loss_scaler": 0.01,
+        "type": "psychic",
+        "damage_window_start": 1100,
+        "damage_window_end": 1400,
+        "name_kor": "잠재파워 (에스퍼)"
     },];
 
     $.each(data, function(i) {
-        var fmove = {
-            id: data[i].move_id,
-            name: data[i].name,
-            name_kor: data[i].name_kor,
-            energyDelta: data[i].energy_delta,
-            power: data[i].power,
-            duration: data[i].duration,
-            dws: data[i].damage_window_start,
-            type: data[i].type.toLowerCase()
-        };
-        fmove.type_kor = Data.BattleSettings.TypeTranslation[fmove.type];
-        Data.FastMoves.push(fmove);
-    });
+            var fmove = {
+                id: data[i].move_id,
+                name: data[i].name,
+                name_kor: data[i].name_kor,
+                energyDelta: data[i].energy_delta,
+                power: data[i].power,
+                duration: data[i].duration,
+                dws: data[i].damage_window_start,
+                type: data[i].type.toLowerCase()
+            };
+
+            fmove.type_kor = Data.BattleSettings.TypeTranslation[fmove.type];
+            Data.FastMoves.push(fmove);
+        });
+
     Data.FastMoves.sort((a,b)=>(a.name < b.name ? -1 : 1));
     Data.FastMoves.sorted = true;
+
+    handleExceptionFastMoves();
+}
+
+function handleExceptionFastMoves(){
+    console.log("handle exception moves");
+    Data.FastMovesHiddenPower = [
+        "Hidden Power (normal)",
+        "Hidden Power (grass)",
+        "Hidden Power (ground)",
+        "Hidden Power (fire)",
+        "Hidden Power (dark)",
+        "Hidden Power (ghost)",
+        "Hidden Power (fairy)",
+        "Hidden Power (fighting)",
+        "Hidden Power (poison)",
+        "Hidden Power (rock)",
+        "Hidden Power (water)",
+        "Hidden Power (electric)",
+        "Hidden Power (bug)",
+        "Hidden Power (ice)",
+        "Hidden Power (steel)",
+        "Hidden Power (dragon)",
+        "Hidden Power (flying)",
+        "Hidden Power (psychic)"];
 }
 
 function fetchChargedMove() {
@@ -4014,7 +4244,7 @@ function fetchChargedMove() {
         "duration": 2300,
         "energy_delta": -100,
         "move_id": 397,
-        "name": "Wildbold Storm",
+        "name": "Wildbolt Storm",
         "power": 140,
         "stamina_loss_scaler": 0.01,
         "type": "Electric",
@@ -4098,17 +4328,6 @@ function fetchChargedMove() {
         "damage_window_start": 1300,
         "damage_window_end": 1500,
         "name_kor": "매지컬플레임"
-    }, {
-        "duration": 2300,
-        "energy_delta": -45,
-        "move_id": 0,
-        "name": "Wildbolt Storm",
-        "power": 60,
-        "stamina_loss_scaler": 0.01,
-        "type": "Electric",
-        "damage_window_start": 1800,
-        "damage_window_end": 3200,
-        "name_kor": "번개폭풍"
     }];
     $.each(data, function(i) {
         var cmove = {
@@ -4124,6 +4343,7 @@ function fetchChargedMove() {
         cmove.type_kor = Data.BattleSettings.TypeTranslation[cmove.type];
         Data.ChargedMoves.push(cmove);
     });
+
     Data.ChargedMoves.sort((a,b)=>(a.name < b.name ? -1 : 1));
     Data.ChargedMoves.sorted = true;
 }
@@ -5606,7 +5826,7 @@ function fetchPokemon() {
         "pokemon_name": "Rapidash",
         "type": ["Psychic", "Fairy"],
         "charged_moves": ["Play Rough", "Psychic", "Body Slam", "Megahorn", "High Horsepower"],
-        "elite_charged_moves": [],
+        "elite_charged_moves": ["Wild Charge",],
         "elite_fast_moves": [],
         "fast_moves": ["Low Kick", "Psycho Cut", "Fairy Wind"],
         "pokemon_name_kor": "날쌩마"
@@ -5619,7 +5839,7 @@ function fetchPokemon() {
         "pokemon_name": "Rapidash",
         "type": ["Fire"],
         "charged_moves": ["Fire Blast", "Drill Run", "Heat Wave", "Flame Charge", "Scorching Sands"],
-        "elite_charged_moves": [],
+        "elite_charged_moves": ["Wild Charge",],
         "elite_fast_moves": ["Ember"],
         "fast_moves": ["Low Kick", "Fire Spin", "Incinerate"],
         "pokemon_name_kor": "날쌩마"
@@ -15849,10 +16069,10 @@ function fetchPokemon() {
         "pokemon_id": 675,
         "pokemon_name": "Pangoro",
         "type": ["Fighting", "Dark"],
-        "charged_moves": ["Karate Chop", "Close Combat", "Night Slash", "Iron Head", "Rock Slide"],
+        "charged_moves": ["Close Combat", "Night Slash", "Iron Head", "Rock Slide"],
         "elite_charged_moves": [],
         "elite_fast_moves": [],
-        "fast_moves": ["Low Kick", "Snarl", "Bullet Punch"],
+        "fast_moves": ["Karate Chop", "Low Kick", "Snarl", "Bullet Punch"],
         "pokemon_name_kor": "부란다"
     }, {
         "base_attack": 164,

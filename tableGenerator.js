@@ -61,10 +61,6 @@ function fetchTableColumns(){
         title: "차징공격속성", //10
         data: "cmove.type_kor",
         visible: false
-    // }, {
-    //     title: "티어",
-    //     data: "tier",
-    //     visible: true
     }]; 
 }
 
@@ -278,14 +274,20 @@ function applyFilter(){
         function(settings, data, dataIndex) {
             if (filterString == '' || filterRow(data, filterString)) {   
                 let rawData = table.row(dataIndex).data();
-                filteredPkmCollection.push(pkmDTO(rawData));
 
+                filteredPkmCollection.push(pkmDTO(rawData));
+                updateErTable(rawData);
+
+                //Dup not allowed
+                if(!allowDup.checked){
+                    console.log(`${rawData.name} : ${rawData.overall} vs ${erList[rawData.name]}`);
+                    return (rawData.overall == erList[rawData.name]);
+                }
                 return true;
             }
             return false;
         }
     );
-
 
     table.page.len(tableLength).draw();
     console.log("Filtering complete");

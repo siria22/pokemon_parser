@@ -1,4 +1,6 @@
 var pkmCollection = [];
+var erList = {};
+var tierList = {};
 
 function calculateDPS(pokemon, kwargs) {
     var x = kwargs.x
@@ -53,6 +55,7 @@ function calculateDPSIntake(pokemon, kwargs) {
 }
 
 function damage(attacker, defender, move, weather) {
+
     var multipliers = 1;
     if (attacker.pokeType.some(function(x) {
         return x == move.type;
@@ -80,6 +83,7 @@ function calculateCP(pkm) {
 }
 
 
+// 만들어지고, 보여줄 때 보여줄 항목
 function constructPkmCollection(){
     console.log("construct pkmCollection");
     for (let pkm of Data.Pokemon){
@@ -96,6 +100,17 @@ function constructPkmCollection(){
         pkm.pokeType1_kor = Data.BattleSettings.TypeTranslation[pkm.pokeType[0]];
         pkm.pokeType2_kor = Data.BattleSettings.TypeTranslation[pkm.pokeType[1]] == undefined ? "단일" : Data.BattleSettings.TypeTranslation[pkm.pokeType[1]];
         
+
+        if(pkm.fastMove.includes("Hidden Power")){
+            pkm.fastMove.push(...Data.FastMovesHiddenPower);
+            pkm.fastMove = pkm.fastMove.filter(elem => elem !== "Hidden Power");
+        }
+
+        if(pkm.fastMove.includes("Hidden Power *")){
+            pkm.fastMove.push(...Data.FastMovesHiddenPower.map(mv => mv + " *"));
+            pkm.fastMove = pkm.fastMove.filter(elem => elem !== "Hidden Power *");
+        }
+
         //모든 case를 고려해야 함
         for (let fmove of pkm.fastMove) {
             for (let cmove of pkm.chargedMove) {
@@ -106,17 +121,24 @@ function constructPkmCollection(){
                     continue;
                 }
                 
-                pkmCopy.fmove = Data.FastMoves.find(trg => trg.name.toLowerCase() === fmove.replace(" *", "").toLowerCase());
-                pkmCopy.cmove = Data.ChargedMoves.find(trg => trg.name.toLowerCase() === cmove.replace(" *", "").toLowerCase());
-                
+                try{
+                    pkmCopy.fmove = Data.FastMoves.find(trg => trg.name.toLowerCase() === fmove.replace(" *", "").toLowerCase());
+                    pkmCopy.cmove = Data.ChargedMoves.find(trg => trg.name.toLowerCase() === cmove.replace(" *", "").toLowerCase());
+                } catch(e){
+                    console.log("ERROR : current = "+pkmCopy.fmove + "\n"+pkmCopy.cmove);
+                }
+
                 // fmove
                 try{
+
                     if(fmove.includes(" *")){
                         pkmCopy.fmove_kor = pkmCopy.fmove.name_kor + " *";
                     }
                     else{
                         pkmCopy.fmove_kor = pkmCopy.fmove.name_kor;
                     }
+
+
                 }catch (e){
                     console.warn("undefined fmove : "+fmove);
                     pkmCopy.fmove = Data.FastMoves.find(trg => trg.name === "Dummy_FastMove");
@@ -138,17 +160,70 @@ function constructPkmCollection(){
                     pkmCopy.cmove_kor = pkmCopy.cmove.name_kor;
                 }
 
-                
                 pkmCopy.dps = calculateDPS(pkmCopy, Context);
                 pkmCopy.dps = round(pkmCopy.dps, 3);
                 pkmCopy.tdo = round(pkmCopy.tdo, 1);
                 pkmCopy.overall = round((pkmCopy.dps ** 3 * pkmCopy.tdo) ** 0.25, 2);
 
+
+                updateErTable(pkmCopy);
+                updateTierTable(pkmCopy);
+
+                pkmCopy.tier = calcTier(pkmCopy);
                 pkmCollection.push(pkmCopy);
             }
         }
         
     }
+    console.log(tierList);
     console.log("construct pkmCollection..end");
 
+}
+
+function updateErTable(pkm){
+
+    var trgEr = parseFloat(pkm.overall);
+    if (!erList[pkm.name]) {
+        erList[pkm.name] = trgEr;
+    } else { 
+        let existingEr = parseFloat(erList[pkm.name]);
+        if (existingEr <= trgEr) {
+            erList[pkm.name] = trgEr;
+            //console.log(`er table updated : ${pkm.name}`);
+        } 
+    }
+}
+
+// 각 type별로, 가장 높은 ER값 저장
+function updateTierTable(pkm){
+
+    var trgEr = parseFloat(pkm.overall);
+    //type1
+    if(!tierList[pkm.pokeType1_kor]){
+        tierList[pkm.pokeType1_kor] = trgEr;
+    }else{
+        let existingTopTier = parseFloat(tierList[pkm.pokeType1_kor]);
+
+        if(existingTopTier < trgEr){
+            tierList[pkm.pokeType1_kor] = trgEr;
+            console.log(`${pkm.name} : ${pkm.pokeType1_kor}/${pkm.pokeType2_kor}, ${pkm.overall}\n`+
+                `${existingTopTier} < ${pkm.overall} : update ${pkm.pokeType1_kor} : ${pkm.overall}`);
+        }
+    }
+    //type2
+    if(!tierList[pkm.pokeType2_kor]){
+        tierList[pkm.pokeType2_kor] = trgEr;
+    }else{
+        let existingTopTier = parseFloat(tierList[pkm.pokeType2_kor]);
+        if(existingTopTier < trgEr){
+            tierList[pkm.pokeType2_kor] = trgEr;
+            console.log(`${pkm.name} : ${pkm.pokeType1_kor}/${pkm.pokeType2_kor}, ${pkm.overall}\n`+
+                `${existingTopTier} < ${pkm.overall} : update ${pkm.pokeType2_kor} : ${pkm.overall}`);
+        }
+    }
+}
+
+function calcTier(pkm){
+    
+    var trgEr = parseFloat(pkm.overall);
 }
