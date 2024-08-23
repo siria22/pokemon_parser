@@ -253,8 +253,9 @@ function applyFilter(){
     console.log("Apply Filters...");
 
     // init. Filter
-    $.fn.dataTable.ext.search = [];
-    initFilteredCollection();
+    $.fn.dataTable.ext.search = []; //기존 필터 초기화
+    initFilteredCollection(); //엑셀
+    topErList = {};
 
     // filtering conditions
     var filterString = document.getElementById('Filter').value;
@@ -269,26 +270,57 @@ function applyFilter(){
     console.log("allowDup : "+allowDup.checked);
     console.log("tableLength : "+tableLength);
 
-    // Filter : Search option 
+
+    // Filter : String filter
     $.fn.dataTable.ext.search.push(
         function(settings, data, dataIndex) {
-            if (filterString == '' || filterRow(data, filterString)) {   
-                let rawData = table.row(dataIndex).data();
-
-                filteredPkmCollection.push(pkmDTO(rawData));
-                updateErTable(rawData);
-
-                //Dup not allowed
-                if(!allowDup.checked){
-                    console.log(`${rawData.name} : ${rawData.overall} vs ${erList[rawData.name]}`);
-                    return (rawData.overall == erList[rawData.name]);
+            if(filterString == '' || filterRow(data, filterString)){
+                if(allowDup.checked){
+                    let rawData = table.row(dataIndex).data();
+                    filteredPkmCollection.push(pkmDTO(rawData));
                 }
                 return true;
-            }
+            };
             return false;
         }
     );
 
+    // Filter : Dup not alowed
+    if(!allowDup.checked){
+        table.page.len(tableLength).draw();
+        //construct ErTable
+        table.rows({ filter: 'applied' }).every(function(rowIdx, tableLoop, rowLoop) {
+            let rawData = this.data();
+            updateErTable(rawData);
+        });
+        
+        // Filter : Duplication filter
+        $.fn.dataTable.ext.search.push(
+            function(settings, data, dataIndex) {
+                let rawData = table.row(dataIndex).data();
+                if(rawData.overall == topErList[rawData.name]){
+                    filteredPkmCollection.push(pkmDTO(rawData));
+                    return true;
+                };
+                return false;
+            }
+        );
+    }
+
     table.page.len(tableLength).draw();
     console.log("Filtering complete");
+}
+
+function updateErTable(pkm){
+
+    var trgEr = parseFloat(pkm.overall);
+    if (!topErList[pkm.name]) {
+        topErList[pkm.name] = trgEr;
+    } else { 
+        let existingEr = parseFloat(topErList[pkm.name]);
+        if (existingEr <= trgEr) {
+            topErList[pkm.name] = trgEr;
+            //console.log(`er table updated : ${pkm.name}`);
+        } 
+    }
 }

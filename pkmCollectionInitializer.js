@@ -1,5 +1,5 @@
 var pkmCollection = [];
-var erList = {};
+var topErList = {};
 var tierList = {};
 
 function calculateDPS(pokemon, kwargs) {
@@ -27,6 +27,8 @@ function calculateDPS(pokemon, kwargs) {
     pokemon.st = pokemon.stm / y;
     pokemon.dps = (FDPS * CEPS + CDPS * FEPS) / (CEPS + FEPS) + (CDPS - FDPS) / (CEPS + FEPS) * (1 / 2 - x / pokemon.stm) * y;
     pokemon.tdo = pokemon.dps * pokemon.st;
+
+
     if (pokemon.dps > CDPS) {
         pokemon.dps = CDPS;
         pokemon.tdo = pokemon.dps * pokemon.st;
@@ -102,11 +104,15 @@ function constructPkmCollection(){
         
 
         if(pkm.fastMove.includes("Hidden Power")){
-            pkm.fastMove.push(...Data.FastMovesHiddenPower);
+            //console.log(`${pkm.name} has Hidden Power`);
+            if (!Data.FastMovesHiddenPower.some(move => pkm.fastMove.includes(move))) {
+                pkm.fastMove.push(...Data.FastMovesHiddenPower);
+            }
             pkm.fastMove = pkm.fastMove.filter(elem => elem !== "Hidden Power");
         }
 
         if(pkm.fastMove.includes("Hidden Power *")){
+            //console.log(`${pkm.name} has Hidden Power *`);
             pkm.fastMove.push(...Data.FastMovesHiddenPower.map(mv => mv + " *"));
             pkm.fastMove = pkm.fastMove.filter(elem => elem !== "Hidden Power *");
         }
@@ -165,7 +171,6 @@ function constructPkmCollection(){
                 pkmCopy.tdo = round(pkmCopy.tdo, 1);
                 pkmCopy.overall = round((pkmCopy.dps ** 3 * pkmCopy.tdo) ** 0.25, 2);
 
-
                 updateErTable(pkmCopy);
                 updateTierTable(pkmCopy);
 
@@ -180,19 +185,6 @@ function constructPkmCollection(){
 
 }
 
-function updateErTable(pkm){
-
-    var trgEr = parseFloat(pkm.overall);
-    if (!erList[pkm.name]) {
-        erList[pkm.name] = trgEr;
-    } else { 
-        let existingEr = parseFloat(erList[pkm.name]);
-        if (existingEr <= trgEr) {
-            erList[pkm.name] = trgEr;
-            //console.log(`er table updated : ${pkm.name}`);
-        } 
-    }
-}
 
 // 각 type별로, 가장 높은 ER값 저장
 function updateTierTable(pkm){
@@ -206,8 +198,8 @@ function updateTierTable(pkm){
 
         if(existingTopTier < trgEr){
             tierList[pkm.pokeType1_kor] = trgEr;
-            console.log(`${pkm.name} : ${pkm.pokeType1_kor}/${pkm.pokeType2_kor}, ${pkm.overall}\n`+
-                `${existingTopTier} < ${pkm.overall} : update ${pkm.pokeType1_kor} : ${pkm.overall}`);
+            //console.log(`${pkm.name} : ${pkm.pokeType1_kor}/${pkm.pokeType2_kor}, ${pkm.overall}\n`+
+            //    `${existingTopTier} < ${pkm.overall} : update ${pkm.pokeType1_kor} : ${pkm.overall}`);
         }
     }
     //type2
@@ -217,8 +209,8 @@ function updateTierTable(pkm){
         let existingTopTier = parseFloat(tierList[pkm.pokeType2_kor]);
         if(existingTopTier < trgEr){
             tierList[pkm.pokeType2_kor] = trgEr;
-            console.log(`${pkm.name} : ${pkm.pokeType1_kor}/${pkm.pokeType2_kor}, ${pkm.overall}\n`+
-                `${existingTopTier} < ${pkm.overall} : update ${pkm.pokeType2_kor} : ${pkm.overall}`);
+            // console.log(`${pkm.name} : ${pkm.pokeType1_kor}/${pkm.pokeType2_kor}, ${pkm.overall}\n`+
+            //     `${existingTopTier} < ${pkm.overall} : update ${pkm.pokeType2_kor} : ${pkm.overall}`);
         }
     }
 }
