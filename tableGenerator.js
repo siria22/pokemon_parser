@@ -250,7 +250,7 @@ function drawTable(){
 
 
 function applyFilter(){
-    console.log("Apply Filters...");
+    console.log("====Apply Filters...====");
 
     // init. Filter
     $.fn.dataTable.ext.search = []; //기존 필터 초기화

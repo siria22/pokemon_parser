@@ -17060,7 +17060,7 @@ function fetchPokemon() {
         "pokemon_name": "Primarina",
         "type": ["Water", "Fairy"],
         "charged_moves": ["Psychic", "Hydro Pump", "Moonblast", "Disarming Voice"],
-        "elite_charged_moves": [],
+        "elite_charged_moves": ["Hydro Cannon"],
         "elite_fast_moves": [],
         "fast_moves": ["Charm", "Waterfall"],
         "pokemon_name_kor": "누리레느"

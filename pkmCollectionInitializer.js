@@ -1,10 +1,21 @@
 var pkmCollection = [];
 var topErList = {};
 var tierList = {};
+var cnt = 0;
+
+function debugTest(pokemon){
+
+    var FILTERING_OPTION = "개무소(Normal)";
+    return (pokemon.name.includes(FILTERING_OPTION));
+}
+
 
 function calculateDPS(pokemon, kwargs) {
+    //Not working
     var x = kwargs.x
         , y = kwargs.y;
+
+    //x, y is defined here
     if (x == undefined || y == undefined) {
         var intakeProfile = calculateDPSIntake(pokemon, kwargs);
         x = (x == undefined ? intakeProfile.x : x);
@@ -29,13 +40,31 @@ function calculateDPS(pokemon, kwargs) {
     pokemon.tdo = pokemon.dps * pokemon.st;
 
 
+    if(debugTest(pokemon)){
+        console.log(pokemon);
+        console.log(`FDPS = ${FDPS}\nCDPS = ${CDPS}\ndps = ${pokemon.dps}`);
+    }
+
     if (pokemon.dps > CDPS) {
+        if(debugTest(pokemon)){
+            console.log(`${cnt++} ${pokemon.name} : [has other] dps > CDPS`);
+            console.log(`${pokemon.fmove_kor}, ${pokemon.cmove_kor}`);
+        }
         pokemon.dps = CDPS;
         pokemon.tdo = pokemon.dps * pokemon.st;
     } else if (pokemon.dps < FDPS) {
+        if(debugTest(pokemon)){
+            console.log(`${cnt++} ${pokemon.name} : [has other] dps < FDPS`);
+            console.log(`${pokemon.fmove_kor}, ${pokemon.cmove_kor}`);
+        }
         pokemon.dps = FDPS;
         pokemon.tdo = pokemon.dps * pokemon.st;
     }
+
+    if(debugTest(pokemon)){
+        console.log(`decided dps : ${pokemon.dps}\n`);
+    }
+
     return pokemon.dps;
 }
 
@@ -68,11 +97,16 @@ function damage(attacker, defender, move, weather) {
     for (let pokeType in defender.pokeType) {
         multipliers *= Effectiveness[move.type][pokeType] || 1;
     }
-    return 0.5 * attacker.atk / defender.def * move.power * multipliers + 0.5;
+    return (0.5 * attacker.atk / defender.def * move.power * multipliers + 0.5);
 }
 
 function round(value, numDigits) {
     var multiplier = Math.pow(10, parseInt(numDigits) || 0);
+    
+    //Edited
+    //return (Math.round((value + 0.5) * multiplier) / multiplier).toFixed(numDigits);
+
+    //Legacy
     return (Math.round(value * multiplier) / multiplier).toFixed(numDigits);
 }
 
