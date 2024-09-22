@@ -4,7 +4,7 @@ var tierList = {};
 var cnt = 0;
 
 function debugTest(pokemon){
-    var FILTERING_OPTION = "개무소(Normal)";
+    var FILTERING_OPTION = "펄기아(Origin)";
     return (pokemon.name.includes(FILTERING_OPTION));
 }
 
@@ -24,7 +24,6 @@ function calculateDPS(pokemon, kwargs) {
     var FDmg = damage(pokemon, kwargs.enemy, pokemon.fmove, kwargs.weather);
     var CDmg = damage(pokemon, kwargs.enemy, pokemon.cmove, kwargs.weather);
 
-    
 
     var FE = pokemon.fmove.energyDelta;
     var CE = -pokemon.cmove.energyDelta;
@@ -41,7 +40,6 @@ function calculateDPS(pokemon, kwargs) {
     var FEPS = FE / FDur;
     var CDPS = CDmg / CDur;
     var CEPS = CE / CDur;    
-    // 1bar 기술일 경우, 추가 계산식 필요
 
     if(debugTest(pokemon)){
         console.log(`CDmg = ${CDmg}`);
@@ -139,7 +137,7 @@ function round(value, numDigits) {
 
     var multiplier = Math.pow(10, parseInt(numDigits) || 0);
     return (Math.round(value * multiplier) / multiplier).toFixed(numDigits);
-    
+
 }
 
 function calculateCP(pkm) {
@@ -250,7 +248,6 @@ function constructPkmCollection(){
     console.log("construct pkmCollection..end");
 
 }
-
 
 // 각 type별로, 가장 높은 ER값 저장
 function updateTierTable(pkm){

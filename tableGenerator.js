@@ -238,6 +238,7 @@ function drawTable(){
     console.log("add rows");
     pkmCollection.forEach(
         pkm => {
+            pkm.name = `[${pkm.id}] ` + pkm.name;
             table.row.add(pkm);
             filteredPkmCollection.push(pkmDTO(pkm));
         }

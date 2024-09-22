@@ -1747,7 +1747,7 @@ function fetchFastMove() {
                 energyDelta: data[i].energy_delta,
                 power: data[i].power,
                 duration : roundUp(data[i].duration),
-                dws: data[i].damage_window_start,
+                dws: roundUp(data[i].damage_window_start),
                 type: data[i].type.toLowerCase()
             };
 
@@ -1782,10 +1782,6 @@ function handleExceptionFastMoves(){
         "Hidden Power (dragon)",
         "Hidden Power (flying)",
         "Hidden Power (psychic)"];
-}
-
-function roundUp(value){
-    return Math.floor(value / 500) * 500;
 }
 
 function fetchChargedMove() {
@@ -4353,10 +4349,11 @@ function fetchChargedMove() {
             energyDelta: data[i].energy_delta,
             power: data[i].power,
             duration : roundUp(data[i].duration),
-            dws: data[i].damage_window_start,
+            dws: roundUp(data[i].damage_window_start),
             type: data[i].type.toLowerCase()
         };
         cmove.type_kor = Data.BattleSettings.TypeTranslation[cmove.type];
+        
         Data.ChargedMoves.push(cmove);
     });
     
@@ -21463,7 +21460,7 @@ function fetchPokemon() {
         pkm.chargedMove = data[i].charged_moves
             .concat(markElitMoves(data[i].elite_charged_moves))
             .concat(markElitMoves(data[i].exclusive_charged_moves));
-                
+
         if(pkm.isShadow == true){
             pkm.name = "그림자 " + pkm.name;
         }
@@ -21473,6 +21470,8 @@ function fetchPokemon() {
         if (pkm.form !== "normal") {
             pkm.name = pkm.name + "(" + (pkm.form_kor ? pkm.form_kor : pkm.form) + ")";
         }
+
+        pkm.name += ` | ${(data[i].pokemon_name)}`;
 
         Data.Pokemon.push(pkm);
     });
@@ -22251,6 +22250,8 @@ function fetchMegaPokemon() {
             baseStm: data[i].stats.base_stamina,
             pokeType: data[i].type.map(x=>x.toLowerCase())
         };
+
+
         if(pkm.isShadow == true){
             pkm.name = "그림자 " + pkm.name;
         }
@@ -22260,13 +22261,16 @@ function fetchMegaPokemon() {
         if (pkm.form !== "normal") {
             pkm.name = pkm.name + "(" + (pkm.form_kor ? pkm.form_kor : pkm.form) + ")";
         }
+
         pkm.fastMove = data[i].fast_moves
         .concat(markElitMoves(data[i].elite_fast_moves));
 
         pkm.chargedMove = data[i].charged_moves
             .concat(markElitMoves(data[i].elite_charged_moves))
             .concat(markElitMoves(data[i].exclusive_charged_moves));
-            
+        
+        pkm.name += ` | ${(data[i].pokemon_name)}`;
+
         Data.Pokemon.push(pkm);
     });
     Data.Pokemon.sort((a,b)=>(a.name < b.name ? -1 : 1));
@@ -22300,4 +22304,35 @@ function fetchShadowPokemon(){
     });
 
     Data.Pokemon.push(...shadowPkmCollection);
+}
+
+function roundUp(value){
+
+    if(value < 250)
+        return 0;
+    if( 250 <= value && value < 750)
+        return 500;
+    if( 750 <= value && value < 1250)
+        return 1000;
+    if( 1250 <= value && value < 1750)
+        return 1500;
+    if( 1750 <= value && value < 2250)
+        return 2000;
+    if( 2250 <= value && value < 2750)
+        return 2500;
+    if( 2750 <= value && value < 3250)
+        return 3000;
+    if( 3250 <= value && value < 3750)
+        return 3500;
+    if( 3750 <= value && value < 4250)
+        return 4000;
+    if( 4250 <= value && value < 4750)
+        return 4500;
+    if( 4750 <= value && value < 5250)
+        return 5000;
+    if( 5250 <= value && value < 5750)
+        return 5500;
+
+    console.warn(`Invalid Value! : ${value}`);
+    return NaN;
 }
