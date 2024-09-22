@@ -23,11 +23,16 @@ function calculateDPS(pokemon, kwargs) {
 
     var FDmg = damage(pokemon, kwargs.enemy, pokemon.fmove, kwargs.weather);
     var CDmg = damage(pokemon, kwargs.enemy, pokemon.cmove, kwargs.weather);
+
+    
+
     var FE = pokemon.fmove.energyDelta;
     var CE = -pokemon.cmove.energyDelta;
     var FDur = pokemon.fmove.duration / 1000;
     var CDur = pokemon.cmove.duration / 1000;
     var CDWS = pokemon.cmove.dws / 1000;
+
+    //console.log(`FDur = ${FDur}`);
 
     if (CE >= 100) {
         CE = CE + 0.5 * FE + 0.5 * y * CDWS;
@@ -35,7 +40,15 @@ function calculateDPS(pokemon, kwargs) {
     var FDPS = FDmg / FDur;
     var FEPS = FE / FDur;
     var CDPS = CDmg / CDur;
-    var CEPS = CE / CDur;
+    var CEPS = CE / CDur;    
+    // 1bar 기술일 경우, 추가 계산식 필요
+
+    if(debugTest(pokemon)){
+        console.log(`CDmg = ${CDmg}`);
+        console.log(`CDur = ${CDur}`);
+        console.log(`CDPS = ${CDPS}`);
+        console.log(`CEps = ${CEPS}`);
+    }
 
     if(debugTest(pokemon)){
         console.log(pokemon);
@@ -58,6 +71,7 @@ function calculateDPS(pokemon, kwargs) {
     }
 
     if (pokemon.dps > CDPS) {
+
         if(debugTest(pokemon)){
             console.log(`${cnt++} ${pokemon.name} : [has other] dps > CDPS`);
             console.log(`${pokemon.fmove_kor}, ${pokemon.cmove_kor}`);
@@ -122,13 +136,10 @@ function damage(attacker, defender, move, weather) {
 }
 
 function round(value, numDigits) {
-    var multiplier = Math.pow(10, parseInt(numDigits) || 0);
-    
-    //Edited
-    //return (Math.round((value + 0.5) * multiplier) / multiplier).toFixed(numDigits);
 
-    //Legacy
+    var multiplier = Math.pow(10, parseInt(numDigits) || 0);
     return (Math.round(value * multiplier) / multiplier).toFixed(numDigits);
+    
 }
 
 function calculateCP(pkm) {

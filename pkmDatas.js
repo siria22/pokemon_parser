@@ -1517,7 +1517,7 @@ function fetchFastMove() {
         "name_kor": "모래뿌리기"
     },{
         "duration": 2200,
-        "energy_delta": 0,
+        "energy_delta": 33,
         "move_id": 133,
         "name": "Struggle",
         "power": 35,
@@ -1785,7 +1785,7 @@ function handleExceptionFastMoves(){
 }
 
 function roundUp(value){
-    return Math.ceil(value / 500) * 500;
+    return Math.floor(value / 500) * 500;
 }
 
 function fetchChargedMove() {
@@ -2887,7 +2887,7 @@ function fetchChargedMove() {
         "name_kor": "잠자기"
     }, {
         "duration": 2200,
-        "energy_delta": 0,
+        "energy_delta": -33,
         "move_id": 133,
         "name": "Struggle",
         "power": 35,
