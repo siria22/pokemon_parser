@@ -717,7 +717,7 @@ function fetchFastMove() {
         "energy_delta": 9,
         "move_id": 206,
         "name": "Spark",
-        "power": 6,
+        "power": 3.6,
         "stamina_loss_scaler": 0.01,
         "type": "Electric",
         "damage_window_start": 300,
@@ -959,7 +959,7 @@ function fetchFastMove() {
         "energy_delta": 7,
         "move_id": 228,
         "name": "Metal Claw",
-        "power": 8,
+        "power": 4.8,
         "stamina_loss_scaler": 0.01,
         "type": "Steel",
         "damage_window_start": 430,
@@ -1524,7 +1524,7 @@ function fetchFastMove() {
         "stamina_loss_scaler": 0.1,
         "type": "Normal",
         "damage_window_start": 1200,
-        "damage_window_end": 2000,
+        "damage_window_end": 2400,
         "name_kor": "발버둥"
     }, {
         //Dummy data
@@ -1746,7 +1746,7 @@ function fetchFastMove() {
                 name_kor: data[i].name_kor,
                 energyDelta: data[i].energy_delta,
                 power: data[i].power,
-                duration: data[i].duration,
+                duration : roundUp(data[i].duration),
                 dws: data[i].damage_window_start,
                 type: data[i].type.toLowerCase()
             };
@@ -1782,6 +1782,10 @@ function handleExceptionFastMoves(){
         "Hidden Power (dragon)",
         "Hidden Power (flying)",
         "Hidden Power (psychic)"];
+}
+
+function roundUp(value){
+    return Math.ceil(value / 500) * 500;
 }
 
 function fetchChargedMove() {
@@ -4328,6 +4332,18 @@ function fetchChargedMove() {
         "damage_window_start": 1300,
         "damage_window_end": 1500,
         "name_kor": "매지컬플레임"
+    }, {
+        //data to be modified
+        "duration": 300,
+        "energy_delta": -45,
+        "move_id": 2000,
+        "name": "Mystical Fire",
+        "power": 85,
+        "stamina_loss_scaler": 0.01,
+        "type": "Water",
+        "damage_window_start": 1700,
+        "damage_window_end": 1500,
+        "name_kor": "물거품아리아"
     }];
     $.each(data, function(i) {
         var cmove = {
@@ -4336,14 +4352,14 @@ function fetchChargedMove() {
             name_kor: data[i].name_kor,
             energyDelta: data[i].energy_delta,
             power: data[i].power,
-            duration: data[i].duration,
+            duration : roundUp(data[i].duration),
             dws: data[i].damage_window_start,
             type: data[i].type.toLowerCase()
         };
         cmove.type_kor = Data.BattleSettings.TypeTranslation[cmove.type];
         Data.ChargedMoves.push(cmove);
     });
-
+    
     Data.ChargedMoves.sort((a,b)=>(a.name < b.name ? -1 : 1));
     Data.ChargedMoves.sorted = true;
 }
@@ -10263,7 +10279,7 @@ function fetchPokemon() {
         "pokemon_id": 374,
         "pokemon_name": "Beldum",
         "type": ["Steel", "Psychic"],
-        "charged_moves": ["Struggle"],
+        "charged_moves": ["Iron Head"],
         "elite_charged_moves": [],
         "elite_fast_moves": [],
         "fast_moves": ["Take Down"],
@@ -13029,7 +13045,7 @@ function fetchPokemon() {
         "type": ["Bug", "Grass"],
         "charged_moves": ["Leaf Blade", "X Scissor", "Silver Wind", "Leaf Storm"],
         "elite_charged_moves": [],
-        "elite_fast_moves": [],
+        "elite_fast_moves": ["Shadow Claw"],
         "fast_moves": ["Razor Leaf", "Bug Bite"],
         "pokemon_name_kor": "모아머"
     }, {
@@ -17059,6 +17075,7 @@ function fetchPokemon() {
         "pokemon_id": 730,
         "pokemon_name": "Primarina",
         "type": ["Water", "Fairy"],
+        //data to be modified
         "charged_moves": ["Psychic", "Hydro Pump", "Moonblast", "Disarming Voice"],
         "elite_charged_moves": ["Hydro Cannon"],
         "elite_fast_moves": [],
@@ -18601,7 +18618,7 @@ function fetchPokemon() {
         "charged_moves": ["Flame Charge", "Flamethrower"],
         "elite_charged_moves": [],
         "elite_fast_moves": [],
-        "fast_moves": ["Tackle", "Ember"],
+        "fast_moves": ["Tackle", "Fire Spin"],
         "pokemon_name_kor": "염버니"
     }, {
         "base_attack": 170,
@@ -18614,7 +18631,7 @@ function fetchPokemon() {
         "charged_moves": ["Flame Charge", "Flamethrower"],
         "elite_charged_moves": [],
         "elite_fast_moves": [],
-        "fast_moves": ["Tackle", "Ember"],
+        "fast_moves": ["Tackle", "Fire Spin"],
         "pokemon_name_kor": "래비풋"
     }, {
         "base_attack": 238,
@@ -18627,7 +18644,7 @@ function fetchPokemon() {
         "charged_moves": ["Flame Charge", "Flamethrower", "Focus Blast"],
         "elite_charged_moves": [],
         "elite_fast_moves": [],
-        "fast_moves": ["Tackle", "Ember"],
+        "fast_moves": ["Tackle", "Fire Spin"],
         "pokemon_name_kor": "에이스번"
     }, {
         "base_attack": 132,
@@ -19196,7 +19213,7 @@ function fetchPokemon() {
         "pokemon_id": 856,
         "pokemon_name": "Hatenna",
         "type": ["Psychic"],
-        "charged_moves": ["Psybeam", "Psychic", "Dazzling Gleam"],
+        "charged_moves": ["Psyshock", "Psychic", "Dazzling Gleam"],
         "elite_charged_moves": [],
         "elite_fast_moves": [],
         "fast_moves": ["Confusion", "Charm"],
@@ -19209,7 +19226,7 @@ function fetchPokemon() {
         "pokemon_id": 857,
         "pokemon_name": "Hattrem",
         "type": ["Psychic"],
-        "charged_moves": ["Psybeam", "Psychic", "Dazzling Gleam"],
+        "charged_moves": ["Psychic", "Dazzling Gleam"],
         "elite_charged_moves": [],
         "elite_fast_moves": [],
         "fast_moves": ["Confusion", "Charm"],
@@ -19222,7 +19239,7 @@ function fetchPokemon() {
         "pokemon_id": 858,
         "pokemon_name": "Hatterene",
         "type": ["Psychic", "Fairy"],
-        "charged_moves": ["Psybeam", "Psychic", "Dazzling Gleam", "Power Whip"],
+        "charged_moves": ["Psychic", "Dazzling Gleam", "Power Whip"],
         "elite_charged_moves": [],
         "elite_fast_moves": [],
         "fast_moves": ["Confusion", "Charm", "Psycho Cut"],
@@ -19638,10 +19655,10 @@ function fetchPokemon() {
         "pokemon_id": 887,
         "pokemon_name": "Dragapult",
         "type": ["Dragon", "Ghost"],
-        "charged_moves": ["Dragon Pulse", "Shadow Ball", "Outrage"],
+        "charged_moves": ["Dragon Pulse", "Shadow Ball", "Outrage", "Breaking Swipe"],
         "elite_charged_moves": [],
         "elite_fast_moves": [],
-        "fast_moves": ["Hex", "Dragon Tail"],
+        "fast_moves": ["Astonish", "Dragon Tail"],
         "pokemon_name_kor": "드래펄트"
     }, {
         "base_attack": 332,
@@ -21456,9 +21473,10 @@ function fetchPokemon() {
         if (pkm.form !== "normal") {
             pkm.name = pkm.name + "(" + (pkm.form_kor ? pkm.form_kor : pkm.form) + ")";
         }
-    
+
         Data.Pokemon.push(pkm);
     });
+
     Data.Pokemon.sort((a,b)=>(a.name < b.name ? -1 : 1));
     Data.Pokemon.sorted = true;
 }

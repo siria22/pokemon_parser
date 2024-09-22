@@ -4,7 +4,6 @@ var tierList = {};
 var cnt = 0;
 
 function debugTest(pokemon){
-
     var FILTERING_OPTION = "개무소(Normal)";
     return (pokemon.name.includes(FILTERING_OPTION));
 }
@@ -21,6 +20,7 @@ function calculateDPS(pokemon, kwargs) {
         x = (x == undefined ? intakeProfile.x : x);
         y = (y == undefined ? intakeProfile.y : y);
     }
+
     var FDmg = damage(pokemon, kwargs.enemy, pokemon.fmove, kwargs.weather);
     var CDmg = damage(pokemon, kwargs.enemy, pokemon.cmove, kwargs.weather);
     var FE = pokemon.fmove.energyDelta;
@@ -28,6 +28,7 @@ function calculateDPS(pokemon, kwargs) {
     var FDur = pokemon.fmove.duration / 1000;
     var CDur = pokemon.cmove.duration / 1000;
     var CDWS = pokemon.cmove.dws / 1000;
+
     if (CE >= 100) {
         CE = CE + 0.5 * FE + 0.5 * y * CDWS;
     }
@@ -35,14 +36,25 @@ function calculateDPS(pokemon, kwargs) {
     var FEPS = FE / FDur;
     var CDPS = CDmg / CDur;
     var CEPS = CE / CDur;
+
+    if(debugTest(pokemon)){
+        console.log(pokemon);
+    }
+
     pokemon.st = pokemon.stm / y;
     pokemon.dps = (FDPS * CEPS + CDPS * FEPS) / (CEPS + FEPS) + (CDPS - FDPS) / (CEPS + FEPS) * (1 / 2 - x / pokemon.stm) * y;
     pokemon.tdo = pokemon.dps * pokemon.st;
 
 
     if(debugTest(pokemon)){
-        console.log(pokemon);
-        console.log(`FDPS = ${FDPS}\nCDPS = ${CDPS}\ndps = ${pokemon.dps}`);
+        console.log(`pokemon.st = pokemon.stm / y = calculatedValue`);
+        console.log(`${pokemon.st} = ${pokemon.stm} / ${y} = ${pokemon.stm / y}`);
+
+        console.log(`pokemon.dps = (FDPS * CEPS + CDPS * FEPS) / (CEPS + FEPS) + (CDPS - FDPS) / (CEPS + FEPS) * (1 / 2 - x / pokemon.stm) * y`);
+        console.log(`${pokemon.dps} = (${FDPS} * ${CEPS} + ${CDPS} * ${FEPS}) / (${CEPS} + ${FEPS}) + (${CDPS} - ${FDPS}) / (${CEPS} + ${FEPS}) * (1 / 2 - ${x} / ${pokemon.stm}) * ${y}`);
+
+        console.log(`pokemon.tdo = pokemon.dps * pokemon.st`);
+        console.log(`${pokemon.tdo} = ${pokemon.dps} * ${pokemon.st}`);
     }
 
     if (pokemon.dps > CDPS) {
@@ -77,6 +89,10 @@ function calculateDPSIntake(pokemon, kwargs) {
                 y: DEFAULT_ENEMY_DPS1 * 1.5 / pokemon.def
             };
         } else {
+
+            if(debugTest(pokemon)){
+                console.log(`x = * -${pokemon.cmove.energyDelta} * 0.5 + ${pokemon.fmove.energyDelta} * 0.5`);
+            }
             return {
                 x: -pokemon.cmove.energyDelta * 0.5 + pokemon.fmove.energyDelta * 0.5,
                 y: DEFAULT_ENEMY_DPS1 / pokemon.def
@@ -97,6 +113,11 @@ function damage(attacker, defender, move, weather) {
     for (let pokeType in defender.pokeType) {
         multipliers *= Effectiveness[move.type][pokeType] || 1;
     }
+
+    if(debugTest(attacker)){
+        console.log(`Return Value = 0.5 * ${attacker.atk} / ${defender.def} * ${move.power} * ${multipliers} + 0.5 = ${0.5 * attacker.atk / defender.def * move.power * multipliers + 0.5}`);
+    }
+
     return (0.5 * attacker.atk / defender.def * move.power * multipliers + 0.5);
 }
 

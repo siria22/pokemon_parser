@@ -18,13 +18,7 @@
 
         <form id="setCondition" style="margin: 15px;">
             
-            <div style="font-size: 22px;">version 0.1.7</div><br>
-
-            <!-- Last patch -->
-            <div style="font-size: 20px;">변경 내역</div>
-            <ul>
-                <li>하이드로펌프 추가</li>
-            </ul>
+            <div style="font-size: 22px;">version 0.1.8</div><br>
 
             <input type="text" id="Filter" name="Filter" placeholder="검색어" style="width:50%;"/><br>
             <div class="spacer"></div>
@@ -36,11 +30,13 @@
                 <input type="checkbox" id= "AllowDup" name="AllowDup">
                 중복 허용 여부
             </label>
+
             <div class="spacer"></div>
 
             <button id="btn_query" type="button">
                 :: Button ::
             </button>
+
             <div class="spacer"></div>
 
             <button id="btn_extractAsXlsx" type="button">Extract as .xlsx</button>
@@ -48,6 +44,17 @@
             <div class="spacer"></div>
         </form>
     </div>
+
+    <script>
+        // 'Filter' 입력 필드에서 엔터키 감지 및 'btn_query' 버튼 클릭 실행
+        document.getElementById("Filter").addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault(); // 기본 엔터 동작을 막음
+                document.getElementById("btn_query").click(); // btn_query 버튼 클릭 실행
+            }
+        });
+    </script>
+
 
     <!-- Table -->
     <div class="table">
