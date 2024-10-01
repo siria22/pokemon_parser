@@ -1538,17 +1538,6 @@ function fetchFastMove() {
         "damage_window_start": 1100,
         "damage_window_end": 1400,
         "name_kor": "잠재파워 _DUMMY_"
-    }, {
-        "duration": 1500,
-        "energy_delta": 15,
-        "move_id": 281,
-        "name": "Hidden Power (normal)",
-        "power": 15,
-        "stamina_loss_scaler": 0.01,
-        "type": "Normal",
-        "damage_window_start": 1100,
-        "damage_window_end": 1400,
-        "name_kor": "잠재파워 (노말)"
     },
     {
         "duration": 1500,
@@ -1726,18 +1715,7 @@ function fetchFastMove() {
         "damage_window_start": 1100,
         "damage_window_end": 1400,
         "name_kor": "잠재파워 (비행)"
-    },{
-        "duration": 1500,
-        "energy_delta": 15,
-        "move_id": 281,
-        "name": "Hidden Power (psychic)",
-        "power": 15,
-        "stamina_loss_scaler": 0.01,
-        "type": "psychic",
-        "damage_window_start": 1100,
-        "damage_window_end": 1400,
-        "name_kor": "잠재파워 (에스퍼)"
-    },];
+    }];
 
     $.each(data, function(i) {
             var fmove = {
@@ -4513,7 +4491,8 @@ function fetchPokemon() {
         "elite_charged_moves": [],
         "elite_fast_moves": [],
         "fast_moves": ["Bug Bite", "Tackle"],
-        "pokemon_name_kor": "캐터피"
+        "pokemon_name_kor": "캐터피",
+        "has_shadow": true
     }, {
         "base_attack": 45,
         "base_defense": 80,
@@ -4526,7 +4505,8 @@ function fetchPokemon() {
         "elite_charged_moves": [],
         "elite_fast_moves": [],
         "fast_moves": ["Bug Bite", "Tackle"],
-        "pokemon_name_kor": "단데기"
+        "pokemon_name_kor": "단데기",
+        "has_shadow": true
     }, {
         "base_attack": 167,
         "base_defense": 137,
@@ -4539,7 +4519,8 @@ function fetchPokemon() {
         "elite_charged_moves": [],
         "elite_fast_moves": ["Bug Bite"],
         "fast_moves": ["Struggle Bug", "Confusion"],
-        "pokemon_name_kor": "버터플"
+        "pokemon_name_kor": "버터플",
+        "has_shadow": true
     }, {
         "base_attack": 63,
         "base_defense": 50,
@@ -5454,7 +5435,8 @@ function fetchPokemon() {
         "elite_charged_moves": [],
         "elite_fast_moves": [],
         "fast_moves": ["Karate Chop", "Scratch"],
-        "pokemon_name_kor": "망키"
+        "pokemon_name_kor": "망키",
+        "has_shadow": true
     }, {
         "base_attack": 207,
         "base_defense": 138,
@@ -5467,7 +5449,8 @@ function fetchPokemon() {
         "elite_charged_moves": ["Cross Chop"],
         "elite_fast_moves": ["Karate Chop"],
         "fast_moves": ["Low Kick", "Counter"],
-        "pokemon_name_kor": "성원숭"
+        "pokemon_name_kor": "성원숭",
+        "has_shadow": true
     }, {
         "base_attack": 142,
         "base_defense": 92,
@@ -5897,7 +5880,7 @@ function fetchPokemon() {
         "elite_fast_moves": [],
         "fast_moves": ["Confusion", "Poison Jab"],
         "pokemon_name_kor": "야도란",
-        "has_shadow": true
+        "has_shadow": true,
     }, {
         "base_attack": 177,
         "base_defense": 180,
@@ -12023,7 +12006,8 @@ function fetchPokemon() {
         "elite_charged_moves": ["Magma Storm"],
         "elite_fast_moves": [],
         "fast_moves": ["Fire Spin", "Bug Bite"],
-        "pokemon_name_kor": "히드런"
+        "pokemon_name_kor": "히드런",
+        "has_shadow": true
     }, {
         "base_attack": 287,
         "base_defense": 210,
@@ -12803,7 +12787,8 @@ function fetchPokemon() {
         "elite_charged_moves": [],
         "elite_fast_moves": [],
         "fast_moves": ["Tackle", "Smack Down"],
-        "pokemon_name_kor": "단굴"
+        "pokemon_name_kor": "단굴",
+        "has_shadow": true
     }, {
         "base_attack": 174,
         "base_defense": 143,
@@ -12816,7 +12801,8 @@ function fetchPokemon() {
         "elite_charged_moves": [],
         "elite_fast_moves": [],
         "fast_moves": ["Mud Slap", "Smack Down"],
-        "pokemon_name_kor": "암트르"
+        "pokemon_name_kor": "암트르",
+        "has_shadow": true
     }, {
         "base_attack": 226,
         "base_defense": 201,
@@ -12829,7 +12815,8 @@ function fetchPokemon() {
         "elite_charged_moves": ["Meteor Beam"],
         "elite_fast_moves": [],
         "fast_moves": ["Mud Slap", "Smack Down"],
-        "pokemon_name_kor": "기가이어스"
+        "pokemon_name_kor": "기가이어스",
+        "has_shadow": true
     }, {
         "base_attack": 107,
         "base_defense": 85,
@@ -13057,7 +13044,8 @@ function fetchPokemon() {
         "elite_charged_moves": [],
         "elite_fast_moves": [],
         "fast_moves": ["Bug Bite", "Poison Sting"],
-        "pokemon_name_kor": "마디네"
+        "pokemon_name_kor": "마디네",
+        "has_shadow": true
     }, {
         "base_attack": 100,
         "base_defense": 173,
@@ -13070,7 +13058,8 @@ function fetchPokemon() {
         "elite_charged_moves": [],
         "elite_fast_moves": [],
         "fast_moves": ["Bug Bite", "Poison Sting"],
-        "pokemon_name_kor": "휠구"
+        "pokemon_name_kor": "휠구",
+        "has_shadow": true
     }, {
         "base_attack": 203,
         "base_defense": 175,
@@ -13083,7 +13072,8 @@ function fetchPokemon() {
         "elite_charged_moves": [],
         "elite_fast_moves": [],
         "fast_moves": ["Bug Bite", "Poison Jab"],
-        "pokemon_name_kor": "펜드라"
+        "pokemon_name_kor": "펜드라",
+        "has_shadow": true
     }, {
         "base_attack": 71,
         "base_defense": 111,
@@ -13833,7 +13823,8 @@ function fetchPokemon() {
         "elite_charged_moves": [],
         "elite_fast_moves": [],
         "fast_moves": ["Peck", "Fury Cutter"],
-        "pokemon_name_kor": "딱정곤"
+        "pokemon_name_kor": "딱정곤",
+        "has_shadow": true
     }, {
         "base_attack": 223,
         "base_defense": 187,
@@ -13846,7 +13837,8 @@ function fetchPokemon() {
         "elite_charged_moves": [],
         "elite_fast_moves": [],
         "fast_moves": ["Counter", "Bug Bite"],
-        "pokemon_name_kor": "슈바르고"
+        "pokemon_name_kor": "슈바르고",
+        "has_shadow": true
     }, {
         "base_attack": 97,
         "base_defense": 91,
@@ -14232,7 +14224,8 @@ function fetchPokemon() {
         "elite_charged_moves": [],
         "elite_fast_moves": [],
         "fast_moves": ["Acid", "Infestation"],
-        "pokemon_name_kor": "쪼마리"
+        "pokemon_name_kor": "쪼마리",
+        "has_shadow": true
     }, {
         "base_attack": 220,
         "base_defense": 120,
@@ -14245,7 +14238,8 @@ function fetchPokemon() {
         "elite_charged_moves": [],
         "elite_fast_moves": [],
         "fast_moves": ["Acid", "Infestation", "Water Shuriken"],
-        "pokemon_name_kor": "어지리더"
+        "pokemon_name_kor": "어지리더",
+        "has_shadow": true
     }, {
         "base_attack": 144,
         "base_defense": 171,
@@ -21048,7 +21042,8 @@ function fetchPokemon() {
         "elite_charged_moves": [],
         "elite_fast_moves": [],
         "fast_moves": ["Low Kick", "Counter"],
-        "pokemon_name_kor": "저승갓숭"
+        "pokemon_name_kor": "저승갓숭",
+        "has_shadow": true
     }, {
         "base_attack": 127,
         "base_defense": 151,
