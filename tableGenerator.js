@@ -261,6 +261,7 @@ function applyFilter(){
     // filtering conditions
     var filterString = document.getElementById('Filter').value;
     var allowDup = document.getElementById('AllowDup');
+    var showUnimplemented = document.getElementById('ShowUnimplemented');
     var tableLength = parseInt($('#LengthOfTb').val());
 
     if (isNaN(tableLength) || tableLength <= 0) {
@@ -269,6 +270,7 @@ function applyFilter(){
     }
     console.log("search : "+filterString);
     console.log("allowDup : "+allowDup.checked);
+    console.log("showUnimplemented : "+showUnimplemented.checked);
     console.log("tableLength : "+tableLength);
 
 
@@ -306,6 +308,20 @@ function applyFilter(){
                 return false;
             }
         );
+    }
+
+    // Filter : Show Unimplemented
+    if(!showUnimplemented.checked){
+        $.fn.dataTable.ext.search.push(
+            function(settings, data, dataIndex){
+                let rawData = table.row(dataIndex).data();
+                if(rawData.isUnimplemented){
+                    return false;
+                };
+                filteredPkmCollection.push(pkmDTO(rawData));
+                return true;
+            }
+        )
     }
 
     table.page.len(tableLength).draw();

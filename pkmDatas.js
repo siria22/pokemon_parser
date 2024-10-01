@@ -1601,10 +1601,10 @@ function fetchFastMove() {
         "name": "Hidden Power (fairy)",
         "power": 15,
         "stamina_loss_scaler": 0.01,
-        "type": "fairy",
+        "type": "psychic",
         "damage_window_start": 1100,
         "damage_window_end": 1400,
-        "name_kor": "잠재파워 (페어리)"
+        "name_kor": "잠재파워 (에스퍼)"
     },{
         "duration": 1500,
         "energy_delta": 15,
@@ -1742,13 +1742,11 @@ function fetchFastMove() {
 function handleExceptionFastMoves(){
     console.log("handle exception moves");
     Data.FastMovesHiddenPower = [
-        "Hidden Power (normal)",
         "Hidden Power (grass)",
         "Hidden Power (ground)",
         "Hidden Power (fire)",
         "Hidden Power (dark)",
         "Hidden Power (ghost)",
-        "Hidden Power (fairy)",
         "Hidden Power (fighting)",
         "Hidden Power (poison)",
         "Hidden Power (rock)",
@@ -5880,7 +5878,22 @@ function fetchPokemon() {
         "elite_fast_moves": [],
         "fast_moves": ["Confusion", "Poison Jab"],
         "pokemon_name_kor": "야도란",
-        "has_shadow": true,
+        "has_shadow": false
+    },{
+        "base_attack": 182,
+        "base_defense": 156,
+        "base_stamina": 216,
+        "form": "가라르",
+        "pokemon_id": 80,
+        "pokemon_name": "Slowbro",
+        "type": ["Poison", "Psychic"],
+        "charged_moves": ["Brutal Swing", "Focus Blast", "Psychic", "Sludge Bomb", "Scald"],
+        "elite_charged_moves": ["Surf"],
+        "elite_fast_moves": [],
+        "fast_moves": ["Confusion", "Poison Jab"],
+        "pokemon_name_kor": "야도란",
+        "is_shadow": true,
+        "is_unimplemented": true
     }, {
         "base_attack": 177,
         "base_defense": 180,
@@ -19078,7 +19091,8 @@ function fetchPokemon() {
         "elite_charged_moves": [],
         "elite_fast_moves": [],
         "fast_moves": ["Acid", "Spark", "Poison Jab"],
-        "pokemon_name_kor": "스트린더"
+        "pokemon_name_kor": "스트린더",
+        "is_unimplemented": true
     }, {
         "base_attack": 224,
         "base_defense": 140,
@@ -19091,7 +19105,8 @@ function fetchPokemon() {
         "elite_charged_moves": [],
         "elite_fast_moves": [],
         "fast_moves": ["Acid", "Spark", "Poison Jab"],
-        "pokemon_name_kor": "스트린더"
+        "pokemon_name_kor": "스트린더",
+        "is_unimplemented": true
     }, {
         "base_attack": 118,
         "base_defense": 90,
@@ -19719,7 +19734,8 @@ function fetchPokemon() {
         "elite_charged_moves": [],
         "elite_fast_moves": [],
         "fast_moves": ["Dragon Tail", "Poison Jab"],
-        "pokemon_name_kor": "무한다이노"
+        "pokemon_name_kor": "무한다이노",
+        "is_unimplemented": true
     }, {
         "base_attack": 278,
         "base_defense": 192,
@@ -19732,7 +19748,8 @@ function fetchPokemon() {
         "elite_charged_moves": [],
         "elite_fast_moves": [],
         "fast_moves": ["Dragon Tail", "Poison Jab"],
-        "pokemon_name_kor": "무한다이노"
+        "pokemon_name_kor": "무한다이노",
+        "is_unimplemented": true
     }, {
         "base_attack": 170,
         "base_defense": 112,
@@ -20548,7 +20565,8 @@ function fetchPokemon() {
         "elite_charged_moves": [],
         "elite_fast_moves": [],
         "fast_moves": ["Mud Slap", "Poison Jab"],
-        "pokemon_name_kor": "땃쭈르"
+        "pokemon_name_kor": "땃쭈르",
+        "is_unimplemented": true
     }, {
         "base_attack": 199,
         "base_defense": 149,
@@ -20561,7 +20579,8 @@ function fetchPokemon() {
         "elite_charged_moves": [],
         "elite_fast_moves": [],
         "fast_moves": ["Mud Slap", "Poison Jab"],
-        "pokemon_name_kor": "태깅구르"
+        "pokemon_name_kor": "태깅구르",
+        "is_unimplemented": true
     }, {
         "base_attack": 121,
         "base_defense": 64,
@@ -21446,7 +21465,8 @@ function fetchPokemon() {
             pokeType: data[i].type.map(x=>x.toLowerCase()),
             hasShadow: data[i].has_shadow,
             isShadow: data[i].is_shadow,
-            isPurified: data[i].is_purified
+            isPurified: data[i].is_purified,
+            isUnimplemented: data[i].is_unimplemented
         };
 
         pkm.fastMove = data[i].fast_moves
@@ -21469,6 +21489,10 @@ function fetchPokemon() {
         pkm.name += ` | ${(data[i].pokemon_name)}`;
 
         Data.Pokemon.push(pkm);
+
+        if(pkm.isUnimplemented == true){
+            console.log(`${pkm.name} is unimplemented`);
+        }
     });
 
     Data.Pokemon.sort((a,b)=>(a.name < b.name ? -1 : 1));
@@ -22243,7 +22267,8 @@ function fetchMegaPokemon() {
             baseAtk: data[i].stats.base_attack,
             baseDef: data[i].stats.base_defense,
             baseStm: data[i].stats.base_stamina,
-            pokeType: data[i].type.map(x=>x.toLowerCase())
+            pokeType: data[i].type.map(x=>x.toLowerCase()),
+            isUnimplemented: data[i].is_unimplemented
         };
 
 
@@ -22267,6 +22292,10 @@ function fetchMegaPokemon() {
         pkm.name += ` | ${(data[i].pokemon_name)}`;
 
         Data.Pokemon.push(pkm);
+
+        if(pkm.isUnimplemented == true){
+            console.log(`${pkm.name} is unimplemented`);
+        }
     });
     Data.Pokemon.sort((a,b)=>(a.name < b.name ? -1 : 1));
     Data.Pokemon.sorted = true;
