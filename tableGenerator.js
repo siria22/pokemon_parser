@@ -16,7 +16,7 @@ function fetchTableColumns(){
         type: "string",
         width: "2fr"
     }, {
-        title: "일반공격",
+        title: "일반공격", //3
         data: "fmove_kor",
         type: "string",
         width: "2fr"
@@ -26,7 +26,7 @@ function fetchTableColumns(){
         type: "string",
         width: "2fr"
     }, {
-        title: "DPS",
+        title: "DPS", //5
         data: "dps",
         type: "num",
         width: "1fr",
@@ -291,6 +291,8 @@ function applyFilter(){
     // Filter : Dup not alowed
     if(!allowDup.checked){
         table.page.len(tableLength).draw();
+        initFilteredCollection();
+        
         //construct ErTable
         table.rows({ filter: 'applied' }).every(function(rowIdx, tableLoop, rowLoop) {
             let rawData = this.data();
@@ -312,6 +314,7 @@ function applyFilter(){
 
     // Filter : Show Unimplemented
     if(!showUnimplemented.checked){
+        initFilteredCollection();
         $.fn.dataTable.ext.search.push(
             function(settings, data, dataIndex){
                 let rawData = table.row(dataIndex).data();
