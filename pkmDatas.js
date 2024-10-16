@@ -22279,17 +22279,17 @@ function fetchMegaPokemon() {
         "mega_energy_required": 40,
         "mega_name": "Mega Mawile",
         "pokemon_id": 448,
-        "pokemon_name": "Lucario",
+        "pokemon_name": "Mawile",
         "stats": {
             "base_attack": 188,
             "base_defense": 217,
             "base_stamina": 137
         },
-        "type": ["Fighting", "Steel"],
-        "charged_moves": ["Flash Cannon", "Shadow Ball", "Close Combat", "Power Up Punch", "Aura Sphere", "Blaze Kick", "Thunder Punch"],
+        "type": ["Steel", "Fairy"],
+        "charged_moves": ["Play Rough", "Vice Grip", "Iron Head", "Power Up Punch"],
         "elite_charged_moves": [],
-        "elite_fast_moves": ["Force Palm"],
-        "fast_moves": ["Counter", "Bullet Punch"],
+        "elite_fast_moves": [],
+        "fast_moves": ["Bite", "Astonish", "Ice Fang", "Fire Fang", "Fairy Wind"],
         "mega_name_kor": "입치트(메가)"
     }];
     $.each(data, function(i) {
