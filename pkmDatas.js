@@ -3183,7 +3183,7 @@ function fetchChargedMove() {
         "energy_delta": -33,
         "move_id": 279,
         "name": "Crunch",
-        "power": 765,
+        "power": 65,
         "stamina_loss_scaler": 0.04,
         "type": "Dark",
         "damage_window_start": 1100,
@@ -13274,7 +13274,8 @@ function fetchPokemon() {
         "elite_fast_moves": [],
         "fast_moves": ["Tackle", "Ice Fang"],
         "pokemon_name_kor": "불비달마",
-        "has_shadow": true
+        "has_shadow": true,
+        "is_unimplemented": true
     }, {
         "base_attack": 323,
         "base_defense": 123,
@@ -16968,7 +16969,8 @@ function fetchPokemon() {
         "elite_charged_moves": [],
         "elite_fast_moves": [],
         "fast_moves": ["Incinerate", "Water Gun", "Take Down"],
-        "pokemon_name_kor": "볼케니온"
+        "pokemon_name_kor": "볼케니온",
+        "is_unimplemented": true
     }, {
         "base_attack": 102,
         "base_defense": 99,
@@ -18560,7 +18562,8 @@ function fetchPokemon() {
         "elite_charged_moves": [],
         "elite_fast_moves": [],
         "fast_moves": ["Spark", "Volt Switch"],
-        "pokemon_name_kor": "제라오라"
+        "pokemon_name_kor": "제라오라",
+        "is_unimplemented": true
     }, {
         "base_attack": 118,
         "base_defense": 99,
@@ -19589,7 +19592,8 @@ function fetchPokemon() {
         "elite_charged_moves": [],
         "elite_fast_moves": [],
         "fast_moves": ["Dragon Tail", "Thunder Shock"],
-        "pokemon_name_kor": "파치래곤"
+        "pokemon_name_kor": "파치래곤",
+        "is_unimplemented": true
     }, {
         "base_attack": 190,
         "base_defense": 166,
@@ -20541,7 +20545,8 @@ function fetchPokemon() {
         "elite_charged_moves": [],
         "elite_fast_moves": [],
         "fast_moves": ["Thunder Shock", "Air Slash"],
-        "pokemon_name_kor": "찌리비크"
+        "pokemon_name_kor": "찌리비크",
+        "is_unimplemented": true
     }, {
         "base_attack": 140,
         "base_defense": 108,
@@ -20842,7 +20847,8 @@ function fetchPokemon() {
         "elite_charged_moves": [],
         "elite_fast_moves": [],
         "fast_moves": ["Waterfall", "Charm", "Counter"],
-        "pokemon_name_kor": "돌핀맨"
+        "pokemon_name_kor": "돌핀맨",
+        "is_unimplemented": true
     }, {
         "base_attack": 143,
         "base_defense": 144,
@@ -21389,7 +21395,8 @@ function fetchPokemon() {
         "elite_charged_moves": [],
         "elite_fast_moves": [],
         "fast_moves": ["Powder Snow", "Snarl"],
-        "pokemon_name_kor": "파오젠"
+        "pokemon_name_kor": "파오젠",
+        "is_unimplemented": true
     }, {
         "base_attack": 194,
         "base_defense": 203,
@@ -21467,7 +21474,8 @@ function fetchPokemon() {
         "elite_charged_moves": [],
         "elite_fast_moves": [],
         "fast_moves": ["Thunder Shock", "Dragon Breath"],
-        "pokemon_name_kor": "미라이돈"
+        "pokemon_name_kor": "미라이돈",
+        "is_unimplemented": true
     }];
     $.each(data, function(i) {
         var pkm = {
