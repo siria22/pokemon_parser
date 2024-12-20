@@ -4305,18 +4305,64 @@ function fetchChargedMove() {
         "damage_window_end": 1500,
         "name_kor": "매지컬플레임"
     }, {
-        //data to be modified
+        //TODO: 값 없음
         "duration": 300,
         "energy_delta": -45,
         "move_id": 2000,
-        "name": "Mystical Fire",
+        "name": "Sparkling Aria",
         "power": 85,
         "stamina_loss_scaler": 0.01,
         "type": "Water",
         "damage_window_start": 1700,
         "damage_window_end": 1500,
         "name_kor": "물거품아리아"
-    }];
+    }, {
+        "duration": 3000,
+        "energy_delta": -50,
+        "move_id": 2000,
+        "name": "Rage Fist",
+        "power": 100,
+        "stamina_loss_scaler": 0.01,
+        "type": "Ghost",
+        "damage_window_start": 2750,
+        "damage_window_end": 1500,
+        "name_kor": "분노의주먹"
+    }, {
+        "duration": 2700,
+        "energy_delta": -50,
+        "move_id": 2000,
+        "name": "Aura Wheel Dark",
+        "power": 100,
+        "stamina_loss_scaler": 0.01,
+        "type": "Dark",
+        "damage_window_start": 2100,
+        "damage_window_end": 1500,
+        "name_kor": "오라휠"
+    }, {
+        "duration": 2700,
+        "energy_delta": -50,
+        "move_id": 2000,
+        "name": "Aura Wheel Electric",
+        "power": 100,
+        "stamina_loss_scaler": 0.01,
+        "type": "Electric",
+        "damage_window_start": 2100,
+        "damage_window_end": 1500,
+        "name_kor": "오라휠"
+    }, {
+        //TODO: 값 없음
+        "duration": 2700,
+        "energy_delta": -50,
+        "move_id": 2000,
+        "name": "Flower Trick",
+        "power": 0,
+        "stamina_loss_scaler": 0.01,
+        "type": "Electric",
+        "damage_window_start": 2100,
+        "damage_window_end": 1500,
+        "name_kor": "트릭플라워"
+    },
+];
     $.each(data, function(i) {
         var cmove = {
             id: data[i].move_id,
@@ -5444,7 +5490,7 @@ function fetchPokemon() {
         "pokemon_name": "Primeape",
         "type": ["Fighting"],
         "charged_moves": ["Close Combat", "Low Sweep", "Night Slash", "Ice Punch"],
-        "elite_charged_moves": ["Cross Chop"],
+        "elite_charged_moves": ["Cross Chop", "Rage Fist"],
         "elite_fast_moves": ["Karate Chop"],
         "fast_moves": ["Low Kick", "Counter"],
         "pokemon_name_kor": "성원숭",
@@ -6589,10 +6635,10 @@ function fetchPokemon() {
         "pokemon_id": 121,
         "pokemon_name": "Starmie",
         "type": ["Water", "Psychic"],
-        "charged_moves": ["Hydro Pump", "Power Gem", "Psychic", "Thunder", "Ice Beam", "Psybeam"],
+        "charged_moves": ["Hydro Pump", "Power Gem", "Psychic", "Thunder", "Ice Beam", "Psybeam","Surf"],
         "elite_charged_moves": [],
         "elite_fast_moves": ["Tackle"],
-        "fast_moves": ["Hidden Power", "Water Gun"],
+        "fast_moves": ["Hidden Power", "Water Gun", "Psywave"],
         "pokemon_name_kor": "아쿠스타"
     }, {
         "base_attack": 183,
@@ -10695,7 +10741,7 @@ function fetchPokemon() {
         "charged_moves": ["Hyper Fang", "Hyper Beam", "Surf"],
         "elite_charged_moves": [],
         "elite_fast_moves": [],
-        "fast_moves": ["Water Gun", "Take Down"],
+        "fast_moves": ["Water Gun", "Take Down","Rollout"],
         "pokemon_name_kor": "비버통",
         "has_shadow": true
     }, {
@@ -11762,7 +11808,7 @@ function fetchPokemon() {
         "charged_moves": ["Earthquake", "Aerial Ace", "Night Slash", "Sand Tomb"],
         "elite_charged_moves": [],
         "elite_fast_moves": [],
-        "fast_moves": ["Fury Cutter", "Wing Attack"],
+        "fast_moves": ["Fury Cutter", "Wing Attack","Sand Attack"],
         "pokemon_name_kor": "글라이온",
         "has_shadow": true
     }, {
@@ -16443,7 +16489,7 @@ function fetchPokemon() {
         "pokemon_id": 691,
         "pokemon_name": "Dragalge",
         "type": ["Poison", "Dragon"],
-        "charged_moves": ["Hydro Pump", "Aqua Tail", "Outrage", "Gunk Shot"],
+        "charged_moves": ["Hydro Pump", "Aqua Tail", "Outrage", "Gunk Shot","Focus Blast"],
         "elite_charged_moves": [],
         "elite_fast_moves": [],
         "fast_moves": ["Water Gun", "Acid", "Dragon Tail"],
@@ -19536,8 +19582,8 @@ function fetchPokemon() {
         "pokemon_id": 877,
         "pokemon_name": "Morpeko",
         "type": ["Electric", "Dark"],
-        "charged_moves": ["Seed Bomb", "Outrage"],
-        "elite_charged_moves": ["Seed Bomb", "Outrage"],
+        "charged_moves": ["Seed Bomb", "Outrage","Aura Wheel Electric","Psychic Fangs"],
+        "elite_charged_moves": [],
         "elite_fast_moves": [],
         "fast_moves": ["Charge Beam", "Bite"],
         "pokemon_name_kor": "모르페코"
@@ -19549,8 +19595,8 @@ function fetchPokemon() {
         "pokemon_id": 877,
         "pokemon_name": "Morpeko",
         "type": ["Electric", "Dark"],
-        "charged_moves": ["Seed Bomb", "Outrage"],
-        "elite_charged_moves": ["Seed Bomb", "Outrage"],
+        "charged_moves": ["Seed Bomb", "Outrage","Aura Wheel Dark","Psychic Fangs"],
+        "elite_charged_moves": [],
         "elite_fast_moves": [],
         "fast_moves": ["Charge Beam", "Bite"],
         "pokemon_name_kor": "모르페코"
@@ -20045,8 +20091,8 @@ function fetchPokemon() {
         "pokemon_id": 908,
         "pokemon_name": "Meowscarada",
         "type": ["Grass", "Dark"],
-        "charged_moves": ["Grass Knot", "Play Rough", "Energy Ball", "Night Slash"],
-        "elite_charged_moves": [],
+        "charged_moves": ["Grass Knot", "Play Rough", "Energy Ball", "Night Slash","Flower Trick"],
+        "elite_charged_moves": ["Frenzy Plant"],
         "elite_fast_moves": [],
         "fast_moves": ["Leafage", "Charm"],
         "pokemon_name_kor": "마스카나"
@@ -21079,7 +21125,7 @@ function fetchPokemon() {
         "pokemon_name": "Annihilape",
         "type": ["Fighting", "Ghost"],
         "charged_moves": ["Close Combat", "Low Sweep", "Night Slash", "Ice Punch", "Shadow Ball"],
-        "elite_charged_moves": [],
+        "elite_charged_moves": ["Rage Fist"],
         "elite_fast_moves": [],
         "fast_moves": ["Low Kick", "Counter"],
         "pokemon_name_kor": "저승갓숭",
@@ -22299,6 +22345,24 @@ function fetchMegaPokemon() {
         "elite_fast_moves": [],
         "fast_moves": ["Bite", "Astonish", "Ice Fang", "Fire Fang", "Fairy Wind"],
         "mega_name_kor": "입치트(메가)"
+    }, {
+        "first_time_mega_energy_required": 0,
+        "form": "Normal",
+        "mega_energy_required": 0,
+        "mega_name": "Mega Gallade",
+        "pokemon_id": 475,
+        "pokemon_name": "Gallade",
+        "stats": {
+            "base_attack": 326,
+            "base_defense": 230,
+            "base_stamina": 169
+        },
+        "type": ["Psychic", "Fighting"],
+        "charged_moves": ["Close Combat", "Psychic", "Leaf Blade"],
+        "elite_charged_moves": ["Synchronoise"],
+        "elite_fast_moves": [],
+        "fast_moves": ["Confusion", "Low Kick", "Charm", "Psycho Cut"],
+        "mega_name_kor": "엘레이드 (메가)"
     }];
     $.each(data, function(i) {
         var pkm = {
