@@ -298,7 +298,7 @@ function applyFilter(){
         }
     );
 
-    // Filter : Dup not alowed
+    // Filter : Dup not allowed
     if(!allowDup.checked){
         table.page.len(tableLength).draw();
         initFilteredCollection();
@@ -335,6 +335,7 @@ function applyFilter(){
                 return true;
             }
         )
+        console.log(`show unimplemented : ${filteredPkmCollection}`);
     }
 
     //Filter : Show New Pokemon only
@@ -350,9 +351,15 @@ function applyFilter(){
                 return true;
             }
         )
+        console.log(`show New pkm only : ${filteredPkmCollection}`);
     }
 
     table.page.len(tableLength).draw();
+    initFilteredCollection();
+    table.rows({ filter: 'applied' }).every(function (rowIdx, tableLoop, rowLoop) {
+        let rawData = this.data();
+        filteredPkmCollection.push(pkmDTO(rawData));
+    });
     console.log("Filtering complete");
 }
 
@@ -365,7 +372,6 @@ function updateErTable(pkm){
         let existingEr = parseFloat(topErList[pkm.name]);
         if (existingEr <= trgEr) {
             topErList[pkm.name] = trgEr;
-            //console.log(`er table updated : ${pkm.name}`);
         } 
     }
 }

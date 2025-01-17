@@ -16,10 +16,10 @@ document.getElementById('btn_extractAsXlsx')
 );
 
 function pkmDTO(pkm) {
-    return `${pkm.name},${pkm.pokeType1_kor},${pkm.pokeType2_kor},${pkm.fmove_kor},${pkm.cmove_kor},${pkm.dps},${pkm.tdo},${pkm.overall},${pkm.cp}`;
+    return `${pkm.isNewPkm},${pkm.name},${pkm.pokeType1_kor},${pkm.pokeType2_kor},${pkm.fmove_kor},${pkm.cmove_kor},${pkm.dps},${pkm.tdo},${pkm.overall},${pkm.cp}`;
 }
 
 function initFilteredCollection(){
     filteredPkmCollection = [];
-    filteredPkmCollection.push("포켓몬,포켓몬 타입1,포켓몬 타입2,일반 공격,차징 공격,DPS,TDO,ER,CP");
+    filteredPkmCollection.push("신규,포켓몬,포켓몬 타입1,포켓몬 타입2,일반 공격,차징 공격,DPS,TDO,ER,CP");
 }
