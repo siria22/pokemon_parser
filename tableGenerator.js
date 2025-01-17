@@ -232,7 +232,15 @@ function drawTable(){
         sDom: 'lrtip',
         pageLength: 20,
         columns: tableColumns,
-        scrollX: true
+        scrollX: true,
+        createdRow: function(row, data, dataIndex){
+            if(isNewPkm(data)){
+                $(row).css('background-color', '#DDDDDD');
+            }
+            else{
+                $(row).css('background-color', '#FFFFFF');
+            }
+        }
     });
 
     console.log("add rows");
@@ -343,4 +351,30 @@ function updateErTable(pkm){
             //console.log(`er table updated : ${pkm.name}`);
         } 
     }
+}
+
+function isNewPkm(pkm){
+
+    var newPkm = [
+        "그림자 테일로",
+        "그림자 스왈로",
+        "그림자 펄기아",
+        "그림자 주리비얀",
+        "그림자 샤비",
+        "그림자 샤로다",
+        "그림자 뚜꾸리",
+        "그림자 챠오꿀",
+        "그림자 염무왕",
+        "그림자 수댕이",
+        "그림자 쌍검자비",
+        "그림자 대검귀",
+        "그림자 깨봉이",
+        "그림자 더스트나",
+        "그림자 파르빗",
+        "그림자 파르토",
+    ];
+    console.log(`data : ${pkm.og_name} || idxOf = ${newPkm.indexOf(pkm.og_name)}`);
+
+    return (newPkm.indexOf(pkm.og_name) == -1) ? false : true;
+
 }

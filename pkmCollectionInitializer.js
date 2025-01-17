@@ -156,6 +156,9 @@ function constructPkmCollection(){
         if (pkm.baseAtk < 1 || pkm.baseDef < 1 || pkm.baseStm < 1) {
             continue;
         }
+
+        console.log(`언제된거야 ${pkm.name} -> ${pkm.og_name}`);
+
         // cpm, cp, atk, def 추가
         pkm.cpm = DEFAULT_ATTACKER_CPM;
         pkm.cp = calculateCP(pkm);
@@ -167,8 +170,8 @@ function constructPkmCollection(){
         pkm.pokeType2_kor = Data.BattleSettings.TypeTranslation[pkm.pokeType[1]] == undefined ? "단일" : Data.BattleSettings.TypeTranslation[pkm.pokeType[1]];
         
 
+        //hidden power
         if(pkm.fastMove.includes("Hidden Power")){
-            //console.log(`${pkm.name} has Hidden Power`);
             if (!Data.FastMovesHiddenPower.some(move => pkm.fastMove.includes(move))) {
                 pkm.fastMove.push(...Data.FastMovesHiddenPower);
             }
@@ -176,7 +179,6 @@ function constructPkmCollection(){
         }
 
         if(pkm.fastMove.includes("Hidden Power *")){
-            //console.log(`${pkm.name} has Hidden Power *`);
             pkm.fastMove.push(...Data.FastMovesHiddenPower.map(mv => mv + " *"));
             pkm.fastMove = pkm.fastMove.filter(elem => elem !== "Hidden Power *");
         }
