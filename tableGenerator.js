@@ -234,7 +234,7 @@ function drawTable(){
         columns: tableColumns,
         scrollX: true,
         createdRow: function(row, data, dataIndex){
-            if(isNewPkm(data)){
+            if(data.isNewPkm){
                 $(row).css('background-color', '#DDDDDD');
             }
             else{
@@ -270,6 +270,7 @@ function applyFilter(){
     var filterString = document.getElementById('Filter').value;
     var allowDup = document.getElementById('AllowDup');
     var showUnimplemented = document.getElementById('ShowUnimplemented');
+    var showNewPokemonOnly = document.getElementById('ShowNewPokemonOnly');
     var tableLength = parseInt($('#LengthOfTb').val());
 
     if (isNaN(tableLength) || tableLength <= 0) {
@@ -279,6 +280,7 @@ function applyFilter(){
     console.log("search : "+filterString);
     console.log("allowDup : "+allowDup.checked);
     console.log("showUnimplemented : "+showUnimplemented.checked);
+    console.log("showNewPokemonOnly : "+showNewPokemonOnly.checked);
     console.log("tableLength : "+tableLength);
 
 
@@ -335,6 +337,21 @@ function applyFilter(){
         )
     }
 
+    //Filter : Show New Pokemon only
+    if(showNewPokemonOnly.checked){
+        initFilteredCollection();
+        $.fn.dataTable.ext.search.push(
+            function(settings, data, dataIndex){
+                let rawData = table.row(dataIndex).data();
+                if(rawData.isNewPkm == false){
+                    return false;
+                };
+                filteredPkmCollection.push(pkmDTO(rawData));
+                return true;
+            }
+        )
+    }
+
     table.page.len(tableLength).draw();
     console.log("Filtering complete");
 }
@@ -351,30 +368,4 @@ function updateErTable(pkm){
             //console.log(`er table updated : ${pkm.name}`);
         } 
     }
-}
-
-function isNewPkm(pkm){
-
-    var newPkm = [
-        "그림자 테일로",
-        "그림자 스왈로",
-        "그림자 펄기아",
-        "그림자 주리비얀",
-        "그림자 샤비",
-        "그림자 샤로다",
-        "그림자 뚜꾸리",
-        "그림자 챠오꿀",
-        "그림자 염무왕",
-        "그림자 수댕이",
-        "그림자 쌍검자비",
-        "그림자 대검귀",
-        "그림자 깨봉이",
-        "그림자 더스트나",
-        "그림자 파르빗",
-        "그림자 파르토",
-    ];
-    console.log(`data : ${pkm.og_name} || idxOf = ${newPkm.indexOf(pkm.og_name)}`);
-
-    return (newPkm.indexOf(pkm.og_name) == -1) ? false : true;
-
 }

@@ -41,52 +41,16 @@ function calculateDPS(pokemon, kwargs) {
     var CDPS = CDmg / CDur;
     var CEPS = CE / CDur;    
 
-    if(debugTest(pokemon)){
-        console.log(`CDmg = ${CDmg}`);
-        console.log(`CDur = ${CDur}`);
-        console.log(`CDPS = ${CDPS}`);
-        console.log(`CEps = ${CEPS}`);
-    }
-
-    if(debugTest(pokemon)){
-        console.log(pokemon);
-    }
-
     pokemon.st = pokemon.stm / y;
     pokemon.dps = (FDPS * CEPS + CDPS * FEPS) / (CEPS + FEPS) + (CDPS - FDPS) / (CEPS + FEPS) * (1 / 2 - x / pokemon.stm) * y;
     pokemon.tdo = pokemon.dps * pokemon.st;
 
-
-    if(debugTest(pokemon)){
-        console.log(`pokemon.st = pokemon.stm / y = calculatedValue`);
-        console.log(`${pokemon.st} = ${pokemon.stm} / ${y} = ${pokemon.stm / y}`);
-
-        console.log(`pokemon.dps = (FDPS * CEPS + CDPS * FEPS) / (CEPS + FEPS) + (CDPS - FDPS) / (CEPS + FEPS) * (1 / 2 - x / pokemon.stm) * y`);
-        console.log(`${pokemon.dps} = (${FDPS} * ${CEPS} + ${CDPS} * ${FEPS}) / (${CEPS} + ${FEPS}) + (${CDPS} - ${FDPS}) / (${CEPS} + ${FEPS}) * (1 / 2 - ${x} / ${pokemon.stm}) * ${y}`);
-
-        console.log(`pokemon.tdo = pokemon.dps * pokemon.st`);
-        console.log(`${pokemon.tdo} = ${pokemon.dps} * ${pokemon.st}`);
-    }
-
     if (pokemon.dps > CDPS) {
-
-        if(debugTest(pokemon)){
-            console.log(`${cnt++} ${pokemon.name} : [has other] dps > CDPS`);
-            console.log(`${pokemon.fmove_kor}, ${pokemon.cmove_kor}`);
-        }
         pokemon.dps = CDPS;
         pokemon.tdo = pokemon.dps * pokemon.st;
     } else if (pokemon.dps < FDPS) {
-        if(debugTest(pokemon)){
-            console.log(`${cnt++} ${pokemon.name} : [has other] dps < FDPS`);
-            console.log(`${pokemon.fmove_kor}, ${pokemon.cmove_kor}`);
-        }
         pokemon.dps = FDPS;
         pokemon.tdo = pokemon.dps * pokemon.st;
-    }
-
-    if(debugTest(pokemon)){
-        console.log(`decided dps : ${pokemon.dps}\n`);
     }
 
     return pokemon.dps;
@@ -101,10 +65,6 @@ function calculateDPSIntake(pokemon, kwargs) {
                 y: DEFAULT_ENEMY_DPS1 * 1.5 / pokemon.def
             };
         } else {
-
-            if(debugTest(pokemon)){
-                console.log(`x = * -${pokemon.cmove.energyDelta} * 0.5 + ${pokemon.fmove.energyDelta} * 0.5`);
-            }
             return {
                 x: -pokemon.cmove.energyDelta * 0.5 + pokemon.fmove.energyDelta * 0.5,
                 y: DEFAULT_ENEMY_DPS1 / pokemon.def
@@ -124,10 +84,6 @@ function damage(attacker, defender, move, weather) {
     var Effectiveness = Data.BattleSettings.TypeEffectiveness;
     for (let pokeType in defender.pokeType) {
         multipliers *= Effectiveness[move.type][pokeType] || 1;
-    }
-
-    if(debugTest(attacker)){
-        console.log(`Return Value = 0.5 * ${attacker.atk} / ${defender.def} * ${move.power} * ${multipliers} + 0.5 = ${0.5 * attacker.atk / defender.def * move.power * multipliers + 0.5}`);
     }
 
     return (0.5 * attacker.atk / defender.def * move.power * multipliers + 0.5);
@@ -156,8 +112,6 @@ function constructPkmCollection(){
         if (pkm.baseAtk < 1 || pkm.baseDef < 1 || pkm.baseStm < 1) {
             continue;
         }
-
-        console.log(`언제된거야 ${pkm.name} -> ${pkm.og_name}`);
 
         // cpm, cp, atk, def 추가
         pkm.cpm = DEFAULT_ATTACKER_CPM;

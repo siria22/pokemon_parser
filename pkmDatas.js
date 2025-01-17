@@ -21552,8 +21552,12 @@ function fetchPokemon() {
             hasShadow: data[i].has_shadow,
             isShadow: data[i].is_shadow,
             isPurified: data[i].is_purified,
-            isUnimplemented: data[i].is_unimplemented
+            isUnimplemented: data[i].is_unimplemented,
+            isNewPkm: false
         };
+        if(isNewPkm(pkm.og_name)){
+            pkm.isNewPkm = true;
+        }
 
         pkm.fastMove = data[i].fast_moves
             .concat(markElitMoves(data[i].elite_fast_moves));
@@ -21564,7 +21568,6 @@ function fetchPokemon() {
 
         if(pkm.isShadow == true){
             pkm.name = "그림자 " + pkm.name;
-            pkm.og_name = "그림자 " + pkm.name;
         }
         if (pkm.isPurified) {
             pkm.name = "정화 " + pkm.name;
@@ -22392,12 +22395,15 @@ function fetchMegaPokemon() {
             baseDef: data[i].stats.base_defense,
             baseStm: data[i].stats.base_stamina,
             pokeType: data[i].type.map(x=>x.toLowerCase()),
-            isUnimplemented: data[i].is_unimplemented
+            isUnimplemented: data[i].is_unimplemented,
+            isNewPkm: false
         };
+        if(isNewPkm(pkm.og_name)){
+            pkm.isNewPkm = true;
+        }
 
         if(pkm.isShadow == true){
             pkm.name = "그림자 " + pkm.name;
-            pkm.og_name = "그림자 " + pkm.name;
         }
         if (pkm.isPurified) {
             pkm.name = "정화 " + pkm.name;
@@ -22433,7 +22439,7 @@ function fetchShadowPokemon(){
         if(pkm.hasShadow == true){
             var shadowPkm = {
                 id: pkm.id,
-                name: pkm.name,
+                name: "그림자 " + pkm.name,
                 og_name: "그림자 " + pkm.og_name,
                 form: pkm.form,
                 baseAtk: pkm.baseAtk,
@@ -22445,14 +22451,42 @@ function fetchShadowPokemon(){
                 hasShadow: pkm.hasShadow,
                 isShadow: true,
                 isPurified: pkm.isPurified,
+                isNewPkm: false
             };
-            shadowPkm.name = "그림자 " + shadowPkm.name;
+            if(isNewPkm(shadowPkm.og_name)){
+                shadowPkm.isNewPkm = true;
+            }
 
             shadowPkmCollection.push(shadowPkm);
         }
     });
 
     Data.Pokemon.push(...shadowPkmCollection);
+}
+
+// return true if New pokemon
+function isNewPkm(pkmName){
+
+    var newPkm = [
+        "그림자 테일로",
+        "그림자 스왈로",
+        "그림자 펄기아",
+        "그림자 주리비얀",
+        "그림자 샤비",
+        "그림자 샤로다",
+        "그림자 뚜꾸리",
+        "그림자 챠오꿀",
+        "그림자 염무왕",
+        "그림자 수댕이",
+        "그림자 쌍검자비",
+        "그림자 대검귀",
+        "그림자 깨봉이",
+        "그림자 더스트나",
+        "그림자 파르빗",
+        "그림자 파르토",
+    ];
+
+    return (newPkm.indexOf(pkmName) == -1) ? false : true;
 }
 
 function roundUp(value){
