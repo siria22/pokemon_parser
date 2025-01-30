@@ -196,6 +196,7 @@ function constructPkmCollection(){
 
                 pkmCopy.tier = calcTier(pkmCopy);
                 pkmCollection.push(pkmCopy);
+                console.log(`New pkm added`);
             }
         }
         

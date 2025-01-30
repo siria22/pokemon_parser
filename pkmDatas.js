@@ -4305,9 +4305,8 @@ function fetchChargedMove() {
         "damage_window_end": 1500,
         "name_kor": "매지컬플레임"
     }, {
-        //TODO: 값 없음
-        "duration": 300,
-        "energy_delta": -45,
+        "duration": 3000,
+        "energy_delta": -33,
         "move_id": 2000,
         "name": "Sparkling Aria",
         "power": 85,
@@ -4350,30 +4349,17 @@ function fetchChargedMove() {
         "damage_window_end": 1500,
         "name_kor": "오라휠"
     }, {
-        //TODO: 값 없음
         "duration": 2700,
-        "energy_delta": -50,
+        "energy_delta": -33,
         "move_id": 2000,
         "name": "Flower Trick",
-        "power": 0,
+        "power": 75,
         "stamina_loss_scaler": 0.01,
-        "type": "Electric",
+        "type": "Grass",
         "damage_window_start": 2100,
         "damage_window_end": 1500,
         "name_kor": "트릭플라워"
-    }, {
-        //TODO: 값 없음
-        "duration": 2700,
-        "energy_delta": -50,
-        "move_id": 2000,
-        "name": "Cell Blade",
-        "power": 0,
-        "stamina_loss_scaler": 0.01,
-        "type": "Normal",
-        "damage_window_start": 2100,
-        "damage_window_end": 1500,
-        "name_kor": "셀블레이드"
-    },
+    }
 ];
     $.each(data, function(i) {
         var cmove = {
@@ -13935,7 +13921,7 @@ function fetchPokemon() {
         "pokemon_name": "Escavalier",
         "type": ["Bug", "Steel"],
         "charged_moves": ["Megahorn", "Acid Spray", "Drill Run", "Aerial Ace"],
-        "elite_charged_moves": ["Cell Blade"],
+        "elite_charged_moves": ["Razor Shell"],
         "elite_fast_moves": [],
         "fast_moves": ["Counter", "Bug Bite"],
         "pokemon_name_kor": "슈바르고",
