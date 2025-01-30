@@ -4361,6 +4361,18 @@ function fetchChargedMove() {
         "damage_window_start": 2100,
         "damage_window_end": 1500,
         "name_kor": "트릭플라워"
+    }, {
+        //TODO: 값 없음
+        "duration": 2700,
+        "energy_delta": -50,
+        "move_id": 2000,
+        "name": "Cell Blade",
+        "power": 0,
+        "stamina_loss_scaler": 0.01,
+        "type": "Normal",
+        "damage_window_start": 2100,
+        "damage_window_end": 1500,
+        "name_kor": "셀블레이드"
     },
 ];
     $.each(data, function(i) {
@@ -13923,7 +13935,7 @@ function fetchPokemon() {
         "pokemon_name": "Escavalier",
         "type": ["Bug", "Steel"],
         "charged_moves": ["Megahorn", "Acid Spray", "Drill Run", "Aerial Ace"],
-        "elite_charged_moves": [],
+        "elite_charged_moves": ["Cell Blade"],
         "elite_fast_moves": [],
         "fast_moves": ["Counter", "Bug Bite"],
         "pokemon_name_kor": "슈바르고",
@@ -14324,7 +14336,7 @@ function fetchPokemon() {
         "pokemon_name": "Accelgor",
         "type": ["Bug"],
         "charged_moves": ["Bug Buzz", "Acid Spray", "Signal Beam", "Focus Blast"],
-        "elite_charged_moves": [],
+        "elite_charged_moves": ["Energy Ball"],
         "elite_fast_moves": [],
         "fast_moves": ["Acid", "Infestation", "Water Shuriken"],
         "pokemon_name_kor": "어지리더",
@@ -18803,10 +18815,10 @@ function fetchPokemon() {
         "pokemon_id": 821,
         "pokemon_name": "Rookidee",
         "type": ["Flying"],
-        "charged_moves": ["Drill Peck", "Brave Bird"],
+        "charged_moves": ["Payback", "Sky Attack"],
         "elite_charged_moves": [],
         "elite_fast_moves": [],
-        "fast_moves": ["Peck", "Air Slash"],
+        "fast_moves": ["Peck", "Air Slash", "Sand Attack"],
         "pokemon_name_kor": "파라꼬"
     }, {
         "base_attack": 129,
@@ -18816,10 +18828,10 @@ function fetchPokemon() {
         "pokemon_id": 822,
         "pokemon_name": "Corvisquire",
         "type": ["Flying"],
-        "charged_moves": ["Drill Peck", "Brave Bird"],
+        "charged_moves": ["Payback", "Sky Attack"],
         "elite_charged_moves": [],
         "elite_fast_moves": [],
-        "fast_moves": ["Peck", "Air Slash"],
+        "fast_moves": ["Peck", "Air Slash", "Sand Attack"],
         "pokemon_name_kor": "파크로우"
     }, {
         "base_attack": 163,
@@ -18829,10 +18841,10 @@ function fetchPokemon() {
         "pokemon_id": 823,
         "pokemon_name": "Corviknight",
         "type": ["Flying", "Steel"],
-        "charged_moves": ["Drill Peck", "Brave Bird", "Iron Head"],
-        "elite_charged_moves": [],
+        "charged_moves": ["Payback", "Sky Attack"],
+        "elite_charged_moves": ["Iron Head"],
         "elite_fast_moves": [],
-        "fast_moves": ["Steel Wing", "Air Slash"],
+        "fast_moves": ["Steel Wing", "Air Slash", "Sand Attack"],
         "pokemon_name_kor": "아머까오"
     }, {
         "base_attack": 46,
