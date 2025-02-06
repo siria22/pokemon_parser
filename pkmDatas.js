@@ -14795,7 +14795,7 @@ function fetchPokemon() {
         "pokemon_name": "Kyurem",
         "type": ["Dragon", "Ice"],
         "charged_moves": ["Iron Head", "Blizzard", "Stone Edge", "Outrage"],
-        "elite_charged_moves": ["Ice Burn"],
+        "elite_charged_moves": ["Freeze Shock"],
         "elite_fast_moves": [],
         "fast_moves": ["Dragon Tail", "Shadow Claw"],
         "pokemon_name_kor": "큐레무"
@@ -14821,7 +14821,7 @@ function fetchPokemon() {
         "pokemon_name": "Kyurem",
         "type": ["Dragon", "Ice"],
         "charged_moves": ["Dragon Pulse", "Blizzard", "Ancient Power", "Focus Blast"],
-        "elite_charged_moves": ["Freeze Shock"],
+        "elite_charged_moves": ["Ice Burn"],
         "elite_fast_moves": [],
         "fast_moves": ["Dragon Breath", "Steel Wing", "Ice Fang"],
         "pokemon_name_kor": "큐레무"
