@@ -4296,7 +4296,7 @@ function fetchChargedMove() {
     }, {
         "duration": 0,
         "energy_delta": -45,
-        "move_id": 2000,
+        "move_id": 409,
         "name": "Mystical Fire",
         "power": 60,
         "stamina_loss_scaler": 0.01,
@@ -4307,7 +4307,7 @@ function fetchChargedMove() {
     }, {
         "duration": 3000,
         "energy_delta": -33,
-        "move_id": 2000,
+        "move_id": 410,
         "name": "Sparkling Aria",
         "power": 85,
         "stamina_loss_scaler": 0.01,
@@ -4318,7 +4318,7 @@ function fetchChargedMove() {
     }, {
         "duration": 3000,
         "energy_delta": -50,
-        "move_id": 2000,
+        "move_id": 411,
         "name": "Rage Fist",
         "power": 100,
         "stamina_loss_scaler": 0.01,
@@ -4329,7 +4329,7 @@ function fetchChargedMove() {
     }, {
         "duration": 2700,
         "energy_delta": -50,
-        "move_id": 2000,
+        "move_id": 412,
         "name": "Aura Wheel Dark",
         "power": 100,
         "stamina_loss_scaler": 0.01,
@@ -4340,7 +4340,7 @@ function fetchChargedMove() {
     }, {
         "duration": 2700,
         "energy_delta": -50,
-        "move_id": 2000,
+        "move_id": 413,
         "name": "Aura Wheel Electric",
         "power": 100,
         "stamina_loss_scaler": 0.01,
@@ -4351,7 +4351,7 @@ function fetchChargedMove() {
     }, {
         "duration": 2700,
         "energy_delta": -33,
-        "move_id": 2000,
+        "move_id": 414,
         "name": "Flower Trick",
         "power": 75,
         "stamina_loss_scaler": 0.01,
@@ -4359,7 +4359,29 @@ function fetchChargedMove() {
         "damage_window_start": 2100,
         "damage_window_end": 1500,
         "name_kor": "트릭플라워"
-    }
+    }, {
+        "duration": 2000,
+        "energy_delta": -50,
+        "move_id": 415,
+        "name": "Ice Burn",
+        "power": 80,
+        "stamina_loss_scaler": 0.01,
+        "type": "Ice",
+        "damage_window_start": 1800,
+        "damage_window_end": 1500,
+        "name_kor": "콜드플레어"
+    }, {
+        "duration": 1500,
+        "energy_delta": -100,
+        "move_id": 416,
+        "name": "Freeze Shock",
+        "power": 75,
+        "stamina_loss_scaler": 0.01,
+        "type": "Ice",
+        "damage_window_start": 900,
+        "damage_window_end": 1500,
+        "name_kor": "프리즈볼트"
+    },
 ];
     $.each(data, function(i) {
         var cmove = {
@@ -14773,7 +14795,7 @@ function fetchPokemon() {
         "pokemon_name": "Kyurem",
         "type": ["Dragon", "Ice"],
         "charged_moves": ["Iron Head", "Blizzard", "Stone Edge", "Outrage"],
-        "elite_charged_moves": [],
+        "elite_charged_moves": ["Ice Burn"],
         "elite_fast_moves": [],
         "fast_moves": ["Dragon Tail", "Shadow Claw"],
         "pokemon_name_kor": "큐레무"
@@ -14799,9 +14821,9 @@ function fetchPokemon() {
         "pokemon_name": "Kyurem",
         "type": ["Dragon", "Ice"],
         "charged_moves": ["Dragon Pulse", "Blizzard", "Ancient Power", "Focus Blast"],
-        "elite_charged_moves": [],
+        "elite_charged_moves": ["Freeze Shock"],
         "elite_fast_moves": [],
-        "fast_moves": ["Dragon Breath", "Steel Wing"],
+        "fast_moves": ["Dragon Breath", "Steel Wing", "Ice Fang"],
         "pokemon_name_kor": "큐레무"
     }, {
         "base_attack": 260,
