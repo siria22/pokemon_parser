@@ -4375,7 +4375,7 @@ function fetchChargedMove() {
         "energy_delta": -100,
         "move_id": 416,
         "name": "Freeze Shock",
-        "power": 75,
+        "power": 160,
         "stamina_loss_scaler": 0.01,
         "type": "Ice",
         "damage_window_start": 900,
